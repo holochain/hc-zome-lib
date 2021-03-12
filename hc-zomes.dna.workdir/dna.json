@@ -1,0 +1,23 @@
+{
+  "name": "hc-zomes",
+  "version": "0.0.0",
+  "description": "This is not a DNA.",
+  "uuid": "00000000-0000-0000-0000-000000000000",
+  "authors": [
+      {
+          "indentifier": ["zo-el <joel.ulahanna@holo.host>"],
+          "public_key_source": "",
+          "signature": ""
+      }
+  ],
+  "dna_spec_version": "3.0",
+  "properties": {
+      "test": "test",
+      "T_and_C": "https://holo.host/alpha-terms"
+  },
+  "zomes": {
+    "profile": {
+      "wasm_path": "../target/wasm32-unknown-unknown/release/profiles.wasm"
+    }
+  }
+}
