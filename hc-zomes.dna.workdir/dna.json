@@ -17,7 +17,7 @@
   },
   "zomes": {
     "profile": {
-      "wasm_path": "../target/wasm32-unknown-unknown/release/profiles.wasm"
+      "wasm_path": "../target/wasm32-unknown-unknown/release/profile.wasm"
     }
   }
 }

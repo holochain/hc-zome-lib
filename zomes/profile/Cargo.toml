@@ -1,8 +1,12 @@
 [package]
-name = "profiles"
+name = "profile"
 version = "0.1.0"
 authors = ["zo-el <joelulahanna@gmail>"]
 edition = "2018"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "profile"
 
 [dependencies]
 serde = "=1.0.104"
@@ -10,7 +14,3 @@ thiserror = "1.0.22"
 hdk3 = "0"
 hc_utils = "0"
 holo_hash = "0"
-
-[lib]
-path = "src/lib.rs"
-crate-type = ["cdylib"]
