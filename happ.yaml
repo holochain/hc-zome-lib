@@ -1,0 +1,15 @@
+---
+manifest_version: "1"
+name: hc-zomes
+description: ""
+slots:
+  - id: profile
+    provisioning:
+      strategy: create
+      deferred: false
+    dna:
+      bundled: ./hc-zomes.dna
+      properties: ~
+      uuid: ~
+      version: ~
+      clone_limit: 0

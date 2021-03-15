@@ -1,8 +1,8 @@
 use hc_utils::*;
-use hdk3::prelude::*;
+use hdk::prelude::*;
 
 #[hdk_entry(id = "profile", visibility = "public", required_validations = 2)]
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct Profile {
     pub agent_address: WrappedAgentPubKey,
     pub nickname: Option<String>,
@@ -10,7 +10,7 @@ pub struct Profile {
     pub uniqueness: AnyDhtHash,
 }
 
-#[derive(Serialize, Deserialize, SerializedBytes)]
+#[derive(Serialize, Deserialize, Debug, SerializedBytes)]
 pub struct ProfileInput {
     pub nickname: Option<String>,
     pub avatar_url: Option<String>,

@@ -2,7 +2,7 @@ extern crate serde;
 use crate::entries::*;
 use crate::error::{ProfileError, ProfileResult};
 use hc_utils::*;
-use hdk3::prelude::*;
+use hdk::prelude::*;
 
 pub fn _update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile> {
     // Chcek if the profile Exist

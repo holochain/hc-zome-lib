@@ -1,0 +1,8 @@
+---
+manifest_version: "1"
+name: hc-zomes
+uuid: 9a28aac8-337c-11eb-adc1-0Z02acw20115
+properties: ~
+zomes:
+  - name: profile
+    bundled: "./target/wasm32-unknown-unknown/release/profile.wasm"

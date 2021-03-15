@@ -15,9 +15,14 @@ const NETOWRK = {
 
 export const CONFIG = Config.gen({network: NETOWRK})
 
-export const BUNDLE = [
-  {
-    path: path.join(__dirname, '../hc-zomes.dna.gz'),
-    nick: 'hc-zomes'
-  }
+export const chatDna = path.join(__dirname, "../hc-zomes.dna")
+
+// create an InstallAgentsHapps array with your DNAs to tell tryorama what
+// to install into the conductor.
+export const installation1agent: InstallAgentsHapps = [
+  [[chatDna]],
+]
+export const installation2agent: InstallAgentsHapps = [
+  [[chatDna]],
+  [[chatDna]],
 ]

@@ -8,7 +8,7 @@
 SHELL		= bash
 DNANAME		= hc-zomes
 DNA		= $(DNANAME).dna.gz
-WASM		= target/wasm32-unknown-unknown/release/service.wasm
+WASM		= target/wasm32-unknown-unknown/release/profile.wasm
 
 # External targets; Uses a nix-shell environment to obtain Holochain runtimes, run tests, etc.
 .PHONY: all FORCE
@@ -33,7 +33,8 @@ build:		$(DNA)
 # Package the DNA from the built target release WASM
 $(DNA):		$(WASM) FORCE
 	@echo "Packaging DNA:"
-	@dna-util -c $(DNANAME).dna.workdir
+	@hc dna pack . -o ./$(DNANAME).dna
+	@hc app pack . -o ./$(DNANAME).happ
 	@ls -l $@
 
 # Recompile the target release WASM
