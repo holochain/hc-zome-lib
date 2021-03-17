@@ -7,7 +7,7 @@
 #
 SHELL		= bash
 DNANAME		= hc-zomes
-DNA		= $(DNANAME).dna.gz
+DNA		= $(DNANAME).dna
 WASM		= target/wasm32-unknown-unknown/release/profile.wasm
 
 # External targets; Uses a nix-shell environment to obtain Holochain runtimes, run tests, etc.

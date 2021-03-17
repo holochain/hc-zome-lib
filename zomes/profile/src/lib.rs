@@ -3,6 +3,7 @@ mod handler;
 use entries::*;
 use hdk::prelude::*;
 mod error;
+mod validation;
 use hc_utils::WrappedAgentPubKey;
 
 entry_defs![Profile::entry_def()];
@@ -20,4 +21,11 @@ fn get_my_profile(_: ()) -> ExternResult<Profile> {
 #[hdk_extern]
 fn get_profile(agent_address: WrappedAgentPubKey) -> ExternResult<Profile> {
     Ok(handler::_get_profile(AgentPubKey::from(agent_address))?)
+}
+
+#[hdk_extern]
+fn validate_profile(
+    entry: ValidateData,
+) -> ExternResult<ValidateCallbackResult> {
+    Ok(validation::__validate_profile(entry)?)
 }
