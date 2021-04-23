@@ -62,6 +62,70 @@ test-dna-debug:
 
 test-e2e:	test-dna
 
+#############################
+# █▀█ █▀▀ █░░ █▀▀ ▄▀█ █▀ █▀▀
+# █▀▄ ██▄ █▄▄ ██▄ █▀█ ▄█ ██▄
+#############################
+# How to make a release?
+# make HC_REV="HC_REV" release-0.0.0-alpha0
+
+update-release-%:
+	cd zomes/profile/ && sed -i -e 's/^version = .*/version = "$*"/' Cargo.toml
+
+update-hc:
+	make HC_REV=$(HC_REV) update-hc-sha
+	make HC_REV=$(HC_REV) update-nix-by-failure
+	make HC_REV=$(HC_REV) update-hc-cargoSha
+
+update-hc-sha:
+	@if [ $(HC_REV) ]; then\
+		echo "⚙️  Updating servicelogger using holochain rev: $(HC_REV)";\
+		echo "✔  Updating hdk rev in Cargo.toml...";\
+		sed -i -e 's/^hdk = .*/hdk = {git ="https:\/\/github.com\/holochain\/holochain", rev = "$(HC_REV)", package = "hdk"}/' Cargo.toml;\
+		echo "✔  Replacing rev...";\
+		sed -i -e 's/^     rev = .*/     rev = "$(HC_REV)";/' default.nix;\
+		echo "✔  Replacing sha256...";\
+		sed -i -e 's/^     sha256 = .*/     sha256 = "$(shell nix-prefetch-url --unpack "https://github.com/holochain/holochain/archive/$(HC_REV).tar.gz")";/' default.nix;\
+	else \
+		echo "No holochain rev provided"; \
+  fi
+
+update-nix-by-failure:
+	@if [ $(HC_REV) ]; then\
+		echo "➳  Corrupting cargoSha256...";\
+		sed -i -e 's/^     cargoSha256 = .*/     cargoSha256 = "000000000000000000000000000000000000000000000000000a";/' default.nix;\
+		echo "➳  Getting cargoSha256... This can take a while...";\
+		nix-shell &>nix.log || echo "This was ment to fail :)...";\
+	else \
+		echo "No holochain rev provided"; \
+  fi
+
+
+update-hc-cargoSha:
+	@if [ $(HC_REV) ]; then\
+		echo "➳  Waiting for 5s..."$*;\
+		sleep 5;\
+		echo "✔  Replacing cargoSha256...";\
+		$(eval CARGOSHA256=$(shell sh -c "grep "got" ./nix.log" | awk '{print $$2}'))\
+		sed -i -e 's/^     cargoSha256 = .*/     cargoSha256 = "$(CARGOSHA256)";/' default.nix;\
+	else \
+		echo "No holochain rev provided"; \
+  fi
+
+# For the hc-zome-lib release we just need to update the branch
+release-%:
+	echo '⚙️  Editing necessary files required for update...'
+	make update-release-$*
+	make HC_REV=$(HC_REV) update-hc
+	echo '⚙️  Running tests...'
+	make nix-test-dna-debug
+	echo '⚙️  Commit updates to new branch...'
+	git checkout -b release-$*
+	git add zomes/ Cargo.toml default.nix
+	git commit -m hc:$(HC_REV)
+	git push origin HEAD
+	echo '🚀  Successful updated hc-zome-lib for HC REV: '$(HC_REV)
+
 # Generic targets; does not require a Nix environment
 .PHONY: clean
 clean:

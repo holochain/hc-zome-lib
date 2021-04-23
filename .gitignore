@@ -4,3 +4,4 @@ dist/
 .cargo
 *.dna
 *.happ
+nix.log
