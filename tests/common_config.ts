@@ -13,7 +13,7 @@ const NETOWRK = {
   }]
 }
 
-export const CONFIG = Config.gen({network: NETOWRK})
+export const CONFIG = Config.gen()
 
 export const chatDna = path.join(__dirname, "../hc-zomes.dna")
 
