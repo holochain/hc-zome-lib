@@ -150,11 +150,12 @@ checksum = "d7afe4a420e3fe79967a00898cc1f4db7c8a49a9333a29f8a4bd76a253d5cd04"
 
 [[package]]
 name = "hc_utils"
-version = "0.2.0"
-source = "git+https://github.com/holochain/hc-utils?branch=develop#40b19ebeb31cedd3b839c84e831a056b444de66b"
+version = "0.2.1"
+source = "git+https://github.com/holochain/hc-utils?branch=gen#60a309b747f37487962095f1363fb572a5aea9bb"
 dependencies = [
  "hdk",
  "holo_hash",
+ "paste",
  "serde",
  "thiserror",
 ]
@@ -310,9 +311,9 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "libc"
-version = "0.2.93"
+version = "0.2.94"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9385f66bf6105b241aa65a61cb923ef20efc665cb9f9bb50ac2f0c4b7f378d41"
+checksum = "18794a8ad5b29321f790b55d93dfba91e125cb1a9edbd4f8e3150acc771c1a5e"
 
 [[package]]
 name = "lock_api"
@@ -423,6 +424,7 @@ version = "0.1.0"
 dependencies = [
  "hc_utils",
  "hdk",
+ "paste",
  "serde",
  "thiserror",
 ]
@@ -485,9 +487,9 @@ checksum = "41cc0f7e4d5d4544e8861606a285bb08d3e70712ccc7d2b84d7c0ccfaf4b05ce"
 
 [[package]]
 name = "regex"
-version = "1.4.5"
+version = "1.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "957056ecddbeba1b26965114e191d2e8589ce74db242b6ea25fc4062427a5c19"
+checksum = "2a26af418b574bd56588335b3a3659a65725d4e636eb1016c2f9e3b38c7cc759"
 dependencies = [
  "regex-syntax",
 ]
@@ -632,9 +634,9 @@ checksum = "1e81da0851ada1f3e9d4312c704aa4f8806f0f9d69faaf8df2f3464b4a9437c2"
 
 [[package]]
 name = "syn"
-version = "1.0.70"
+version = "1.0.71"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b9505f307c872bab8eb46f77ae357c8eba1fdacead58ee5a850116b1d7f82883"
+checksum = "ad184cc9470f9117b2ac6817bfe297307418819ba40552f9b3846f05c33d5373"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -805,4 +807,4 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 [[patch.unused]]
 name = "hdk"
 version = "0.0.101-alpha.0"
-source = "git+https://github.com/holochain/holochain?rev=3bd9181ea35c32993d1550591fd19720b31065f6#3bd9181ea35c32993d1550591fd19720b31065f6"
+source = "git+https://github.com/holochain/holochain?rev=a1ae76ecc1fc7dbd645fee3a8cb0df9f610be983#a1ae76ecc1fc7dbd645fee3a8cb0df9f610be983"
