@@ -4,12 +4,12 @@ use crate::error::{ProfileError, ProfileResult};
 use hc_utils::*;
 use hdk::prelude::*;
 
-pub fn _update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile> {
+pub fn __update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile> {
     // Chcek if the profile Exist
     // Get your agent key
     debug!("Start updating your profile...");
     let agent_address = agent_info()?.agent_initial_pubkey;
-    match _is_registered() {
+    match is_registered() {
         Ok(old_data) => {
             let old_profile_header = hc_utils::get_header(hash_entry(&old_data)?).unwrap();
             let profile = Profile {
@@ -38,13 +38,13 @@ pub fn _update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile>
 }
 
 /// search chain for most recently committed profile.  if none return the "default" unregistered profile.
-pub fn _get_my_profile() -> ProfileResult<Profile> {
+pub fn __get_my_profile() -> ProfileResult<Profile> {
     let agent_address = agent_info()?.agent_initial_pubkey;
     //TODO: Hoping to use query here so that I dont have to expect holochain not to search the dht.
-    _get_profile(agent_address)
+    __get_profile(agent_address)
 }
 
-pub fn _get_profile(agent_address: AgentPubKey) -> ProfileResult<Profile> {
+pub fn __get_profile(agent_address: AgentPubKey) -> ProfileResult<Profile> {
     let default_profile = Profile {
         agent_address: WrappedAgentPubKey(agent_address.clone()),
         nickname: None,
@@ -67,8 +67,8 @@ pub fn _get_profile(agent_address: AgentPubKey) -> ProfileResult<Profile> {
     }
 }
 
-fn _is_registered() -> ProfileResult<Profile> {
-    match _get_profile(agent_info()?.agent_initial_pubkey) {
+fn is_registered() -> ProfileResult<Profile> {
+    match __get_profile(agent_info()?.agent_initial_pubkey) {
         Ok(data) => match data.nickname {
             Some(_) => Ok(data),
             None => Err(ProfileError::AgentNotRegisteredProfile),
