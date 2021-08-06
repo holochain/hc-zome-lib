@@ -14,4 +14,4 @@ opt-level = "z"
 # hc_utils = { path = "../hc-utils/crates/hc-utils" }
 hc_utils = {git = "https://github.com/holochain/hc-utils", branch = "v0.0.102", package = "hc_utils"}
 # hdk = { path = "../holochain/crates/hdk" }
-hdk = {git = "https://github.com/holochain/holochain", rev = "8c85ba9629631a17b59b77b9a5a0d5f24c700d11", package = "hdk"}
+hdk = {git = "https://github.com/holochain/holochain", rev = "bd89d55e397baf7876099f600db997c89dd70fb6", package = "hdk"}

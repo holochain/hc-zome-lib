@@ -38,7 +38,9 @@ module.exports = (orchestrator) => {
     t.ok(a_check_a_profile)
     t.equal(profile_input.nickname, a_check_a_profile.nickname)
     t.equal(profile_input.avatar_url, a_check_a_profile.avatar_url)
-
+    
+    await delay(2000)
+    
     let bobbo_check_alice_profile = await bobbo.call('profile', 'get_profile', a_check_a_profile.agent_address);
     console.log("Bobbo checks alice's profile:", bobbo_check_alice_profile);
     t.ok(bobbo_check_alice_profile)

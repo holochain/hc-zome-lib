@@ -9,7 +9,7 @@ crate-type = ["cdylib", "rlib"]
 name = "profile"
 
 [dependencies]
-serde = "=1.0.123"
-thiserror = "1.0.22"
-hdk = "0.0.102"
+serde = "1.0"
+thiserror = "1.0"
+hdk = "0"
 hc_utils = "0"
