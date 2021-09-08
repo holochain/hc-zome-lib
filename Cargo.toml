@@ -1,7 +1,8 @@
 [workspace]
 
 members = [
-  "zomes/profile"
+  "zomes/profile",
+  "zomes/membrane_manager_lib"
 ]
 
 [profile.dev]
@@ -13,6 +14,6 @@ opt-level = "z"
 [patch.crates-io]
 hc_utils = {git = "https://github.com/holochain/hc-utils", branch = "develop", package = "hc_utils"}
 # hc_utils = { path = "../hc-utils/crates/hc-utils" }
-hdk = {git = "https://github.com/holochain/holochain", rev = "ddb7d8d9310d1e6cf4cdc198c0c765ea5d70b9e0", package = "hdk"}
+hdk = {git = "https://github.com/holochain/holochain", rev = "dc382be2a8a26d7c345e023cfaa0d8f6181697db", package = "hdk"}
 # hdk = { path = "../holochain/crates/hdk" }
-holo_hash = {git = "https://github.com/holochain/holochain", rev = "ddb7d8d9310d1e6cf4cdc198c0c765ea5d70b9e0", package = "holo_hash"}
+holo_hash = {git = "https://github.com/holochain/holochain", rev = "dc382be2a8a26d7c345e023cfaa0d8f6181697db", package = "holo_hash"}
