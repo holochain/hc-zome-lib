@@ -1,4 +1,5 @@
 use hdk::prelude::*;
+use self::holo_hash::AgentPubKeyB64;
 
 /// This is the current structure of the payload the holo signs
 #[hdk_entry(id = "joining_code_payload")]
