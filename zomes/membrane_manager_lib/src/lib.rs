@@ -4,11 +4,7 @@ entry_defs![Path::entry_def()];
 
 #[hdk_extern]
 fn init(_: ()) -> ExternResult<InitCallbackResult> {
-    if hc_joining_code::skip_proof() {
-        Ok(InitCallbackResult::Pass)
-    } else {
-        return hc_joining_code::init_validate_and_create_joining_code();
-    }
+    Ok(InitCallbackResult::Pass)
 }
 
 #[hdk_extern]
