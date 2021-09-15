@@ -1,0 +1,13 @@
+[package]
+name = "membrane_manager_lib"
+version = "0.1.0"
+authors = ["zo-el <joelulahanna@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "membrane_manager_lib"
+crate-type = [ "cdylib", "rlib" ]
+
+[dependencies]
+hdk = "=0.0.101-alpha.0"
+hc_joining_code = {path = "../../crates/joining_code"}
