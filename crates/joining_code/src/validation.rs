@@ -42,7 +42,7 @@ pub fn validate_joining_code(
                             // once this is added to the registration flow, e.g.:
                             let joining_code = JoiningCodePayload::try_from(entry)?;
                             if AgentPubKey::try_from(joining_code.registered_agent).unwrap() != author {
-                               return Ok(ValidateCallbackResult::Invalid("Joining code invalid: incorrect agent key".to_string()))
+                               return Ok(ValidateCallbackResult::Invalid("Joining code invalid: incorrect registered agent key".to_string()))
                             }
                             trace!("Joining code validated");
                             return Ok(ValidateCallbackResult::Valid);
