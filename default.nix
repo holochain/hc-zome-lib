@@ -1,21 +1,25 @@
 let
   holonixPath = builtins.fetchTarball {
-    url = "https://github.com/holochain/holonix/archive/3e94163765975f35f7d8ec509b33c3da52661bd1.tar.gz";
-    sha256 = "sha256:07sl281r29ygh54dxys1qpjvlvmnh7iv1ppf79fbki96dj9ip7d2";
+    url = "https://github.com/holochain/holonix/archive/55a5eef58979fb6bc476d8c3e0c028cdeb1b5421.tar.gz";
+    sha256 = "sha256:0q6d0rql1pyy93xw1c8s28jjjcgk1zgwxwixsp9z5r4w2ihaz3zg";
   };
   holonix = import (holonixPath) {
     includeHolochainBinaries = true;
     holochainVersionId = "custom";
 
     holochainVersion = {
-     rev = "dc382be2a8a26d7c345e023cfaa0d8f6181697db";
-     sha256 = "sha256:0fwsnqb1kw1nv1rl2cwqxx0dwya807pzqlcrl8ih0kmb7yv3h6a7";
-     cargoSha256 = "sha256:0y72lm5b0fl9anb2z9pcx1i3shqdlckz04zx3phc084hbzpig4cq";
+     rev = "a8523568753bf7921f5cd90fd40e38402a6471b4";
+     sha256 = "0d6n4ilfv94dcfpafvcrz4kik0damnzwbsf4ylr5cwwg3smi4z4p";
+     cargoSha256 = "04b8gpw51nwg8k630w71fj13p1cmqhw1a96v83a3ydax18c9rz03";
      bins = {
        holochain = "holochain";
        hc = "hc";
        kitsune-p2p-proxy = "kitsune_p2p/proxy";
      };
+     lairKeystoreHashes = {
+        sha256 = "0khg5w5fgdp1sg22vqyzsb2ri7znbxiwl7vr2zx6bwn744wy2cyv";
+        cargoSha256 = "1lm8vrxh7fw7gcir9lq85frfd0rdcca9p7883nikjfbn21ac4sn4";
+      };
     };
     holochainOtherDepsNames = ["lair-keystore"];
   };
