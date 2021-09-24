@@ -6,3 +6,5 @@ properties: ~
 zomes:
   - name: profile
     bundled: "./target/wasm32-unknown-unknown/release/profile.wasm"
+  - name: membrane_manager
+    bundled: "./target/wasm32-unknown-unknown/release/membrane_manager_lib.wasm"

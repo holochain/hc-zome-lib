@@ -14,6 +14,7 @@ let
      bins = {
        holochain = "holochain";
        hc = "hc";
+       kitsune-p2p-proxy = "kitsune_p2p/proxy";
      };
      lairKeystoreHashes = {
         sha256 = "0khg5w5fgdp1sg22vqyzsb2ri7znbxiwl7vr2zx6bwn744wy2cyv";
@@ -22,4 +23,10 @@ let
     };
     holochainOtherDepsNames = ["lair-keystore"];
   };
-in holonix.main
+  nixpkgs = holonix.pkgs;
+in nixpkgs.mkShell {
+  inputsFrom = [ holonix.main ];
+  buildInputs = with nixpkgs; [
+    binaryen
+  ];
+}

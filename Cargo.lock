@@ -109,6 +109,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e"
 
 [[package]]
+name = "hc_joining_code"
+version = "0.2.0"
+dependencies = [
+ "derive_more",
+ "hdk",
+ "holo_hash",
+ "serde",
+]
+
+[[package]]
 name = "hc_utils"
 version = "0.3.0"
 source = "git+https://github.com/holochain/hc-utils?branch=v0.0.107#40be2d3322d9f534ca7ada3c7c78ae910a4d18bd"
@@ -303,6 +313,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f099785f7595cc4b4553a174ce30dd7589ef93391ff414dbb67f62392b9e0ce1"
 dependencies = [
  "regex-automata",
+]
+
+[[package]]
+name = "membrane_manager_lib"
+version = "0.1.0"
+dependencies = [
+ "hc_joining_code",
+ "hdk",
 ]
 
 [[package]]

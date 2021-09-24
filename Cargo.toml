@@ -1,7 +1,8 @@
 [workspace]
 
 members = [
-  "zomes/profile"
+  "zomes/profile",
+  "zomes/membrane_manager_lib"
 ]
 
 [profile.dev]
