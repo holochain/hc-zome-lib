@@ -27,7 +27,6 @@ crate-type = [ "cdylib", "rlib" ]
 [dependencies]
 <ZOME_NAME> = {git = "https://github.com/zo-el/hc-zomes", branch = "develop", package = "<ZOME_NAME>"}
 hdk = "0"
-holo_hash = "0"
 hc_utils = "0"
 ```
 

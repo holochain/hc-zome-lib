@@ -13,7 +13,7 @@ pub fn __update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile
         Ok(old_data) => {
             let old_profile_header = hc_utils::get_header(hash_entry(&old_data)?).unwrap();
             let profile = Profile {
-                agent_address: WrappedAgentPubKey(agent_address.clone()),
+                agent_address: agent_address.clone().into(),
                 nickname: profile_input.nickname.clone(),
                 avatar_url: profile_input.avatar_url.clone(),
                 uniqueness: old_profile_header.clone().into(),
@@ -24,7 +24,7 @@ pub fn __update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile
         Err(_) => {
             // Create new Profile
             let profile = Profile {
-                agent_address: WrappedAgentPubKey(agent_address.clone()),
+                agent_address: agent_address.clone().into(),
                 nickname: profile_input.nickname.clone(),
                 avatar_url: profile_input.avatar_url.clone(),
                 uniqueness: agent_address.clone().into(),
@@ -46,7 +46,7 @@ pub fn __get_my_profile() -> ProfileResult<Profile> {
 
 pub fn __get_profile(agent_address: AgentPubKey) -> ProfileResult<Profile> {
     let default_profile = Profile {
-        agent_address: WrappedAgentPubKey(agent_address.clone()),
+        agent_address: agent_address.clone().into(),
         nickname: None,
         avatar_url: None,
         uniqueness: agent_address.clone().into(),

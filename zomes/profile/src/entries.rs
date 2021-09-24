@@ -1,10 +1,9 @@
-use hc_utils::*;
 use hdk::prelude::*;
 
 #[hdk_entry(id = "profile", visibility = "public", required_validations = 2)]
 #[derive(Clone)]
 pub struct Profile {
-    pub agent_address: WrappedAgentPubKey,
+    pub agent_address: AgentPubKeyB64,
     pub nickname: Option<String>,
     pub avatar_url: Option<String>,
     pub uniqueness: AnyDhtHash,

@@ -4,7 +4,6 @@ use entries::*;
 use hdk::prelude::*;
 mod error;
 mod validation;
-use hc_utils::WrappedAgentPubKey;
 
 entry_defs![Profile::entry_def()];
 
@@ -19,7 +18,7 @@ fn get_my_profile(_: ()) -> ExternResult<Profile> {
 }
 
 #[hdk_extern]
-fn get_profile(agent_address: WrappedAgentPubKey) -> ExternResult<Profile> {
+fn get_profile(agent_address: AgentPubKeyB64) -> ExternResult<Profile> {
     Ok(handler::__get_profile(AgentPubKey::from(agent_address))?)
 }
 
