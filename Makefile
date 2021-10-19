@@ -43,6 +43,15 @@ $(WASM): FORCE
 	@RUST_BACKTRACE=1 CARGO_TARGET_DIR=target cargo build \
 	    --release --target wasm32-unknown-unknown
 
+dnas:
+	mkdir -p ./dnas
+dnas/joining-code-factory.dna:	dnas
+	curl 'https://holo-host.github.io/joining-code-happ/releases/downloads/0_1_2_alpha1/joining-code-factory.test.dna' -o $@
+
+.PHONY: DNAs
+
+DNAs: dnas/joining-code-factory.dna
+
 .PHONY: test test-all test-unit test-e2e test-dna test-dna-debug test-stress test-sim2h test-node
 test-all:	test
 
@@ -52,11 +61,11 @@ test-unit:
 	RUST_BACKTRACE=1 cargo test \
 	    -- --nocapture
 
-test-dna:	$(DNA) FORCE
+test-dna:	$(DNA) FORCE DNAs
 	@echo "Starting Scenario tests in $$(pwd)..."; \
 	    cd tests && ( [ -d  node_modules ] || npm install ) && npm test
 
-test-dna-debug:
+test-dna-debug: $(DNA) FORCE DNAs
 	@echo "Starting Scenario tests in $$(pwd)..."; \
 	    cd tests && ( [ -d  node_modules ] || npm install ) && npm run test-debug
 

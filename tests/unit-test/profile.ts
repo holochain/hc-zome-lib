@@ -1,20 +1,14 @@
-import { InstalledHapp } from '@holochain/tryorama'
-import path = require('path')
-import * as _ from 'lodash'
-import { wait } from '../util'
-import { CONFIG, installation1agent } from '../common_config'
-
-const delay = ms => new Promise(r => setTimeout(r, ms))
+import { CONFIG, wait } from '../common_config'
+import { installAgents } from '../installAgents'
 
 module.exports = (orchestrator) => {
 
   orchestrator.registerScenario('test profile zomes', async (s, t) => {
     // spawn the conductor process
     const [ conductor ] = await s.players([CONFIG])
-    const [[alice_happ]] = await conductor.installAgentsHapps(installation1agent)
+    let [alice_happ] = await installAgents(conductor,  ["alice"])
+    let [bobbo_happ] = await installAgents(conductor,  ["bobbo"])
     const [alice] = alice_happ.cells
-
-    const [[bobbo_happ]] = await conductor.installAgentsHapps(installation1agent)
     const [bobbo] = bobbo_happ.cells
 
     // Create a channel
