@@ -6,8 +6,7 @@ module.exports = (orchestrator) => {
   orchestrator.registerScenario('test profile zomes', async (s, t) => {
     // spawn the conductor process
     const [ conductor ] = await s.players([CONFIG])
-    let [alice_happ] = await installAgents(conductor,  ["alice"])
-    let [bobbo_happ] = await installAgents(conductor,  ["bobbo"])
+    let [alice_happ, bobbo_happ] = await installAgents(conductor,  ["alice", "bobbo"])
     const [alice] = alice_happ.cells
     const [bobbo] = bobbo_happ.cells
 
@@ -26,7 +25,9 @@ module.exports = (orchestrator) => {
       console.error("Error: ", e);
       t.fail()
     }
-
+    
+    await wait(5000)
+    
     let a_check_a_profile = await alice.call('profile', 'get_my_profile', null);
     console.log("Alice checks her profile:", a_check_a_profile);
     t.ok(a_check_a_profile)
