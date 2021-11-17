@@ -12,5 +12,5 @@ opt-level = "z"
 opt-level = "z"
 
 [patch.crates-io]
-hdk = {git = "https://github.com/holochain/holochain", rev = "06c82ade3128ccc73b7b24a137d8fad3756927ef", package = "hdk"}
-holo_hash = {git = "https://github.com/holochain/holochain", rev = "06c82ade3128ccc73b7b24a137d8fad3756927ef", package = "holo_hash"}
+# hdk = {git = "https://github.com/holochain/holochain", rev = "06c82ade3128ccc73b7b24a137d8fad3756927ef", package = "hdk"}
+# holo_hash = {git = "https://github.com/holochain/holochain", rev = "06c82ade3128ccc73b7b24a137d8fad3756927ef", package = "holo_hash"}

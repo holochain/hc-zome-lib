@@ -5,7 +5,7 @@ import * as msgpack from '@msgpack/msgpack';
 import { InstalledHapp, Player } from '@holochain/tryorama';
 
 const dnaConfiguration = {
-  nick: 'hc-zomes',
+  role_id: 'hc-zomes',
 }
 const dnaPath = path.join(__dirname, "../hc-zomes.dna")
 const jcFactoryDna = path.join(__dirname, "../dnas/joining-code-factory.dna");
@@ -27,7 +27,7 @@ export const installJCHapp = async (conductor: Player): Promise<InstalledHapp> =
     agent_key: holo_agent_override,
     dnas: [{
       hash: await conductor.registerDna({path: jcFactoryDna}, conductor.scenarioUID),
-      nick: 'jc',
+      role_id: 'jc',
     }]
   })
   return happ

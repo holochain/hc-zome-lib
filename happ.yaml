@@ -2,7 +2,7 @@
 manifest_version: "1"
 name: hc-zomes
 description: ""
-slots:
+roles:
   - id: profile
     provisioning:
       strategy: create
