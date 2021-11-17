@@ -1,5 +1,5 @@
-use hdk::prelude::*;
 use self::holo_hash::AgentPubKeyB64;
+use hdk::prelude::*;
 
 /// This is the current structure of the payload the holo signs
 #[hdk_entry(id = "joining_code_payload")]
@@ -41,8 +41,13 @@ pub fn validate_joining_code(
                             // check that the joining code has the correct author key in it
                             // once this is added to the registration flow, e.g.:
                             let joining_code = JoiningCodePayload::try_from(entry)?;
-                            if AgentPubKey::try_from(joining_code.registered_agent).unwrap() != author {
-                               return Ok(ValidateCallbackResult::Invalid("Joining code invalid: incorrect registered agent key".to_string()))
+                            if AgentPubKey::try_from(joining_code.registered_agent).unwrap()
+                                != author
+                            {
+                                return Ok(ValidateCallbackResult::Invalid(
+                                    "Joining code invalid: incorrect registered agent key"
+                                        .to_string(),
+                                ));
                             }
                             trace!("Joining code validated");
                             return Ok(ValidateCallbackResult::Valid);
