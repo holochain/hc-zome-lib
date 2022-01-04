@@ -24,15 +24,11 @@ fn get_profile(agent_address: WrappedAgentPubKey) -> ExternResult<Profile> {
 }
 
 #[hdk_extern]
-fn validate_create_entry_profile(
-    entry: ValidateData,
-) -> ExternResult<ValidateCallbackResult> {
+fn validate_create_entry_profile(entry: ValidateData) -> ExternResult<ValidateCallbackResult> {
     Ok(validation::__validate_profile(entry)?)
 }
 
 #[hdk_extern]
-fn validate_update_entry_profile(
-    entry: ValidateData,
-) -> ExternResult<ValidateCallbackResult> {
+fn validate_update_entry_profile(entry: ValidateData) -> ExternResult<ValidateCallbackResult> {
     Ok(validation::__validate_profile(entry)?)
 }

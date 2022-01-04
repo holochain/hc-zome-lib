@@ -1,5 +1,5 @@
-use hdk::prelude::*;
 use self::holo_hash::AgentPubKeyB64;
+use hdk::prelude::*;
 
 /// This is the current structure of the payload the holo signs
 #[hdk_entry(id = "joining_code_payload")]
@@ -18,7 +18,7 @@ pub fn validate_joining_code(
 ) -> ExternResult<ValidateCallbackResult> {
     match membrane_proof {
         Some(mem_proof) => {
-            let mem_proof = Element::try_from(mem_proof.clone())?;
+            let mem_proof = Element::try_from(mem_proof)?;
 
             trace!("Joining code provided: {:?}", mem_proof);
 
@@ -35,35 +35,40 @@ pub fn validate_joining_code(
             let e = mem_proof.entry();
             if let ElementEntry::Present(entry) = e {
                 let signature = mem_proof.signature().clone();
-                match verify_signature(progenitor_agent.clone(), signature, mem_proof.header()) {
+                match verify_signature(progenitor_agent, signature, mem_proof.header()) {
                     Ok(verified) => {
                         if verified {
                             // check that the joining code has the correct author key in it
                             // once this is added to the registration flow, e.g.:
                             let joining_code = JoiningCodePayload::try_from(entry)?;
-                            if AgentPubKey::try_from(joining_code.registered_agent).unwrap() != author {
-                               return Ok(ValidateCallbackResult::Invalid("Joining code invalid: incorrect registered agent key".to_string()))
+                            if AgentPubKey::try_from(joining_code.registered_agent).unwrap()
+                                != author
+                            {
+                                return Ok(ValidateCallbackResult::Invalid(
+                                    "Joining code invalid: incorrect registered agent key"
+                                        .to_string(),
+                                ));
                             }
                             trace!("Joining code validated");
-                            return Ok(ValidateCallbackResult::Valid);
+                            Ok(ValidateCallbackResult::Valid)
                         } else {
                             trace!("Joining code validation failed: incorrect signature");
-                            return Ok(ValidateCallbackResult::Invalid(
+                            Ok(ValidateCallbackResult::Invalid(
                                 "Joining code invalid: incorrect signature".to_string(),
-                            ));
+                            ))
                         }
                     }
                     Err(e) => {
                         debug!("Error on get when verifying signature of agent entry: {:?}; treating as unresolved dependency",e);
-                        return Ok(ValidateCallbackResult::UnresolvedDependencies(vec![
+                        Ok(ValidateCallbackResult::UnresolvedDependencies(vec![
                             (author).into(),
-                        ]));
+                        ]))
                     }
                 }
             } else {
-                return Ok(ValidateCallbackResult::Invalid(
+                Ok(ValidateCallbackResult::Invalid(
                     "Joining code invalid payload".to_string(),
-                ));
+                ))
             }
         }
         None => Ok(ValidateCallbackResult::Invalid(

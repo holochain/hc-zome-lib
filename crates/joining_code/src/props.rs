@@ -18,9 +18,7 @@ pub fn holo_agent(encoded_props: &SerializedBytes) -> ExternResult<AgentPubKey> 
         }
     }
     // This is a hard coded holo agent public key
-    return Ok(
-        AgentPubKey::try_from("uhCAkRHEsXSAebzKJtPsLY1XcNePAFIieFBtz2ATanlokxnSC1Kkz").unwrap(),
-    );
+    Ok(AgentPubKey::try_from("uhCAkRHEsXSAebzKJtPsLY1XcNePAFIieFBtz2ATanlokxnSC1Kkz").unwrap())
 }
 
 pub fn skip_proof_sb(encoded_props: &SerializedBytes) -> bool {
@@ -33,8 +31,8 @@ pub fn skip_proof_sb(encoded_props: &SerializedBytes) -> bool {
 
 // This is useful for test cases where we don't want to provide a membrane proof
 pub fn skip_proof() -> bool {
-    if let Ok(info) = zome_info() {
+    if let Ok(info) = dna_info() {
         return skip_proof_sb(&info.properties);
     }
-    return false;
+    false
 }
