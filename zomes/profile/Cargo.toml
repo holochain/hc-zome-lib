@@ -12,4 +12,4 @@ name = "profile"
 serde = "=1.0.123"
 thiserror = "1.0.22"
 hdk = "=0.0.121"
-hc_utils = {git = "https://github.com/holochain/hc-utils", branch = "0.0.121", package = "hc_utils"}
+hc_utils = "=0.0.121"
