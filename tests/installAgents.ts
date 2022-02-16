@@ -47,21 +47,25 @@ export const installAgents = async (conductor: Player, agentNames: string[], jcH
     const agent = agentNames[i]
     console.log(`generating key for: ${agent}:`)
     const agent_key = await admin.generateAgentPubKey()
-    console.log(`${agent} pubkey:`, agent_key.toString('base64'))
+    console.log(`${agent} pubkey:`, Codec.AgentId.encode(agent_key))
 
     let dna = {
       hash: dnaHash,
       ...dnaConfiguration
     }
-    if (!!jcHapp) {
-      const membrane_proof = await jcHapp.cells[0].call('code-generator', 'make_proof', {
-        role: "ROLE",
-        record_locator: "RECORD_LOCATOR",
-        registered_agent: Codec.AgentId.encode(agent_key)
-      });
-      const mutated = memProofMutator(membrane_proof)
-      dna["membrane_proof"] = Array.from(msgpack.encode(mutated))
-    }
+    // all the dna's will be tested with read only mem-proof
+    dna["membrane_proof"] = [0]
+    // use when you want to test with mem-proofs
+    // Not needed for the current zomes
+    // if (!!jcHapp) {
+    //   const membrane_proof = await jcHapp.cells[0].call('code-generator', 'make_proof', {
+    //     role: "ROLE",
+    //     record_locator: "RECORD_LOCATOR",
+    //     registered_agent: Codec.AgentId.encode(agent_key)
+    //   });
+    //   const mutated = memProofMutator(membrane_proof)
+    //   dna["membrane_proof"] = Array.from(msgpack.encode(mutated))
+    // }
 
     const req = {
       installed_app_id: installedAppId(agent),
