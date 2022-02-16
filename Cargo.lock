@@ -148,7 +148,8 @@ dependencies = [
 [[package]]
 name = "hc_utils"
 version = "0.0.121"
-source = "git+https://github.com/holochain/hc-utils?branch=0.0.121#e877be3d3f21b48f4c600bb4311252007e179914"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ef83403d306a8f19dbce958ec9b5ea88533c2c88d82aecc1c146f1429e2c3085"
 dependencies = [
  "hdk",
  "holo_hash 0.0.18",

@@ -1,5 +1,30 @@
 use self::holo_hash::AgentPubKeyB64;
+use crate::props::skip_proof;
 use hdk::prelude::*;
+
+/// check if the instance that is making the call is eligible
+pub fn is_read_only_instance() -> bool {
+    if skip_proof() {
+        return false;
+    }
+    if let Ok(entries) = &query(ChainQueryFilter::new().header_type(HeaderType::AgentValidationPkg))
+    {
+        if let Header::AgentValidationPkg(h) = entries[0].header() {
+            if let Some(mem_proof) = &h.membrane_proof {
+                if is_read_only_proof(&mem_proof) {
+                    return true;
+                }
+            }
+        }
+    };
+    false
+}
+
+/// check to see if this is the valid read_only membrane proof
+pub fn is_read_only_proof(mem_proof: &MembraneProof) -> bool {
+    let b = mem_proof.bytes();
+    b == &[0]
+}
 
 /// This is the current structure of the payload the holo signs
 #[hdk_entry(id = "joining_code_payload")]
@@ -18,6 +43,9 @@ pub fn validate_joining_code(
 ) -> ExternResult<ValidateCallbackResult> {
     match membrane_proof {
         Some(mem_proof) => {
+            if is_read_only_proof(&mem_proof) {
+                return Ok(ValidateCallbackResult::Valid);
+            };
             let mem_proof = Element::try_from(mem_proof)?;
 
             trace!("Joining code provided: {:?}", mem_proof);
