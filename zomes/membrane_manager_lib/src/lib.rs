@@ -17,17 +17,22 @@ fn genesis_self_check(data: GenesisSelfCheckData) -> ExternResult<ValidateCallba
 }
 
 #[hdk_extern]
-fn validate(data: ValidateData) -> ExternResult<ValidateCallbackResult> {
-    let element = data.element.clone();
-    let entry = element.into_inner().1;
-    let entry = match entry {
-        ElementEntry::Present(e) => e,
-        _ => return Ok(ValidateCallbackResult::Valid),
-    };
-    if let Entry::Agent(_) = entry {
-        if !hc_joining_code::skip_proof() {
-            match data.element.header().prev_header() {
-                Some(header) => match must_get_valid_element(header.clone()) {
+fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
+    match op {
+        Op::StoreEntry {
+            entry: Entry::Agent(_),
+            header:
+                SignedHashed {
+                    hashed:
+                        HoloHashed {
+                            content: header, ..
+                        },
+                    ..
+                },
+        } => {
+            if !hc_joining_code::skip_proof() {
+                let header = header.prev_header();
+                match must_get_valid_element(header.clone()) {
                     Ok(element_pkg) => match element_pkg.signed_header().header() {
                         Header::AgentValidationPkg(pkg) => {
                             return hc_joining_code::validate_joining_code(
@@ -48,14 +53,11 @@ fn validate(data: ValidateData) -> ExternResult<ValidateCallbackResult> {
                             (header.clone()).into(),
                         ]));
                     }
-                },
-                None => {
-                    return Ok(ValidateCallbackResult::Invalid(
-                        "Impossible state".to_string(),
-                    ))
                 }
             }
+            Ok(ValidateCallbackResult::Valid)
         }
+
+        _ => Ok(ValidateCallbackResult::Valid),
     }
-    Ok(ValidateCallbackResult::Valid)
 }

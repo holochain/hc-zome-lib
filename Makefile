@@ -46,7 +46,7 @@ $(WASM): FORCE
 dnas:
 	mkdir -p ./dnas
 dnas/joining-code-factory.dna:	dnas
-	curl 'https://holo-host.github.io/joining-code-happ/releases/downloads/0_1_2_alpha1/joining-code-factory.test.dna' -o $@
+	curl 'https://holo-host.github.io/joining-code-happ/releases/downloads/0_2_1/joining-code-factory.0_2_1.dna' -o $@
 
 .PHONY: DNAs
 
