@@ -84,6 +84,8 @@ test-e2e:	test-dna
 update:
 	echo '⚙️  Updating hdk crate...'
 	cargo upgrade hdk@=$(shell jq .hdk ./version-manager.json) --workspace
+	echo '⚙️  Updating holo_hash crate...'
+	cargo upgrade holo_hash@=$(shell jq .holo_hash ./version-manager.json) --workspace	
 	echo '⚙️  Updating hc_utils crate...'
 	cargo upgrade hc_utils@=$(shell jq .hc_utils ./version-manager.json) --workspace	
 	echo '⚙️  Updating holochainVersionId in nix...'
