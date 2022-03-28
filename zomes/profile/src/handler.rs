@@ -31,7 +31,12 @@ pub fn __update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile
             };
             create_entry(&profile)?;
             let profile_hash = hash_entry(&profile)?;
-            create_link(agent_address.into(), profile_hash, ProfileTag::tag())?;
+            create_link(
+                agent_address.into(),
+                profile_hash,
+                HdkLinkType::Any,
+                ProfileTag::tag(),
+            )?;
             Ok(profile)
         }
     }
