@@ -1,4 +1,4 @@
-use self::holo_hash::AgentPubKeyB64;
+use hdk::prelude::holo_hash::AgentPubKeyB64;
 use hdk::prelude::*;
 
 #[derive(Debug, Serialize, Deserialize, SerializedBytes, Clone)]

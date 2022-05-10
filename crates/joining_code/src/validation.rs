@@ -1,5 +1,5 @@
-use self::holo_hash::AgentPubKeyB64;
 use crate::props::skip_proof;
+use hdk::prelude::holo_hash::AgentPubKeyB64;
 use hdk::prelude::*;
 
 /// check if the instance that is making the call is eligible
@@ -46,7 +46,8 @@ pub fn validate_joining_code(
             if is_read_only_proof(&mem_proof) {
                 return Ok(ValidateCallbackResult::Valid);
             };
-            let mem_proof = Element::try_from(mem_proof)?;
+            // TODO: find a way to TryFrom a ref, to avoid cloning.
+            let mem_proof = Element::try_from((*mem_proof).clone())?;
 
             trace!("Joining code provided: {:?}", mem_proof);
 
@@ -69,9 +70,7 @@ pub fn validate_joining_code(
                             // check that the joining code has the correct author key in it
                             // once this is added to the registration flow, e.g.:
                             let joining_code = JoiningCodePayload::try_from(entry)?;
-                            if AgentPubKey::try_from(joining_code.registered_agent).unwrap()
-                                != author
-                            {
+                            if AgentPubKey::from(joining_code.registered_agent) != author {
                                 return Ok(ValidateCallbackResult::Invalid(
                                     "Joining code invalid: incorrect registered agent key"
                                         .to_string(),
