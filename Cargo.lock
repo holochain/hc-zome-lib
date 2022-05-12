@@ -139,7 +139,8 @@ dependencies = [
 [[package]]
 name = "hc_utils"
 version = "0.0.132"
-source = "git+https://github.com/holochain/hc-utils?rev=cfb8eea4e23c99f6444afe05d7c4dcc0e8cab46e#cfb8eea4e23c99f6444afe05d7c4dcc0e8cab46e"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bf7fb0dbc86ec657d153751a2d14e29418d943c97d06fab94f883b6ec02e951a"
 dependencies = [
  "hdk",
  "serde",
