@@ -138,8 +138,8 @@ dependencies = [
 
 [[package]]
 name = "hc_utils"
-version = "0.0.131"
-source = "git+https://github.com/holochain/hc-utils?branch=hdk-131#809316db5732d0ffd3632898b6ea63ff013db361"
+version = "0.0.132"
+source = "git+https://github.com/holochain/hc-utils?branch=hdk-next#809316db5732d0ffd3632898b6ea63ff013db361"
 dependencies = [
  "hdk",
  "serde",
@@ -148,7 +148,7 @@ dependencies = [
 
 [[package]]
 name = "hdk"
-version = "0.0.131"
+version = "0.0.132"
 dependencies = [
  "hdk_derive",
  "holo_hash",
