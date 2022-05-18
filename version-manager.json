@@ -1,7 +1,6 @@
 {
-    "hdk": "0.0.126",
-    "hc_utils": "0.0.126",
-    "holo_hash": "0.0.21",
-    "holochain_rev": "v0_0_131",
-    "holonix_rev": "44542b5c0cdc984454fad96fbec313b7b1c8ca7c"
+    "hdk": "0.0.133",
+    "hc_utils": "0.0.133",
+    "holochain_rev": "holochain-0.0.140",
+    "lair_rev": "v0.0.10"
 }
