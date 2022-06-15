@@ -87,14 +87,15 @@ update:
 	echo '⚙️  Updating hc_utils crate...'
 	cargo upgrade hc_utils@=$(shell jq .hc_utils ./version-manager.json) --workspace	
 	echo '⚙️  Updating holochainVersionId in nix...'
-	sed -i -e 's/^  holonixRevision = .*/  holonixRevision = $(shell jq .holonix_rev ./version-manager.json);/' config.nix;\
-	sed -i -e 's/^  holochainVersionId = .*/  holochainVersionId = $(shell jq .holochain_rev ./version-manager.json);/' config.nix;\
+	sed -i -e 's/^    rev = .*/    rev = $(shell jq .holochain_rev ./version-manager.json);/' holochain_version.nix;\
+	sed -i -e 's/^    sha256 = .*/    sha256 = "$(shell nix-prefetch-url --unpack "https://github.com/holochain/holochain/archive/$(shell jq .holochain_rev ./version-manager.json).tar.gz")";/' holochain_version.nix;\
+	sed -i -e 's/^        rev = .*/        rev = $(shell jq .lair_rev ./version-manager.json);/' holochain_version.nix;\
+	sed -i -e 's/^        sha256 = .*/        sha256 = "$(shell nix-prefetch-url --unpack "https://github.com/holochain/lair/archive/$(shell jq .lair_rev ./version-manager.json).tar.gz")";/' holochain_version.nix;\
 	echo '⚙️  Building dnas and happ...'
 	rm -rf Cargo.lock
 	make nix-build
 	echo '⚙️  Running tests...'
-	make nix-test-dna
-	
+	make nix-test-dna-debug
 
 # Generic targets; does not require a Nix environment
 .PHONY: clean

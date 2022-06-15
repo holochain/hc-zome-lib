@@ -32,7 +32,7 @@ pub fn __update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile
             create_entry(&profile)?;
             let profile_hash = hash_entry(&profile)?;
             create_link(
-                agent_address.into(),
+                agent_address,
                 profile_hash,
                 HdkLinkType::Any,
                 ProfileTag::tag(),
@@ -66,9 +66,13 @@ pub fn __get_profile(agent_address: AgentPubKey) -> ProfileResult<Profile> {
         None => return Ok(default_profile),
     };
 
-    match hc_utils::get_latest_entry(latest_link_info.target, Default::default()) {
-        Ok(e) => Ok(e.try_into()?),
-        _ => Ok(default_profile),
+    if let Some(target_entry) = latest_link_info.target.into_entry_hash() {
+        match hc_utils::get_latest_entry(target_entry, Default::default()) {
+            Ok(e) => Ok(e.try_into()?),
+            _ => Ok(default_profile),
+        }
+    } else {
+        Ok(default_profile)
     }
 }
 

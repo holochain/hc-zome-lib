@@ -2,7 +2,7 @@
 name = "profile"
 version = "0.1.0"
 authors = ["zo-el <joelulahanna@gmail>"]
-edition = "2018"
+edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -11,5 +11,5 @@ name = "profile"
 [dependencies]
 serde = "1.0"
 thiserror = "1.0"
-hdk = "=0.0.126"
-hc_utils = "=0.0.126"
+hdk = "=0.0.133"
+hc_utils = "=0.0.133"

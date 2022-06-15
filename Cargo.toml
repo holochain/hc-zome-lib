@@ -1,4 +1,5 @@
 [workspace]
+resolver = "2"
 
 members = [
   "zomes/profile",
@@ -12,5 +13,6 @@ opt-level = "z"
 opt-level = "z"
 
 [patch.crates-io]
+# hc_utils = {git = "https://github.com/holochain/hc-utils", rev = "cfb8eea4e23c99f6444afe05d7c4dcc0e8cab46e", package = "hc_utils", version = "0.0.132"}
 # hdk = {git = "https://github.com/holochain/holochain", rev = "06c82ade3128ccc73b7b24a137d8fad3756927ef", package = "hdk"}
 # holo_hash = {git = "https://github.com/holochain/holochain", rev = "06c82ade3128ccc73b7b24a137d8fad3756927ef", package = "holo_hash"}
