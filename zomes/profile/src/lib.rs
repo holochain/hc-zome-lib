@@ -56,12 +56,12 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                 },
             ..
         } => {
-            if is_editable() {
-                validation::__validate_entry(new_entry, &header.author)
-            } else {
+            if is_not_editable() {
                 Ok(ValidateCallbackResult::Invalid(
                     "Invalid try to Delete Entry".to_string(),
                 ))
+            } else {
+                validation::__validate_entry(new_entry, &header.author)
             }
         }
         Op::RegisterDeleteLink { .. } => Ok(ValidateCallbackResult::Invalid(
@@ -77,18 +77,18 @@ struct Props {
 }
 
 /// Checking properties for `not_editable_profile` flag
-pub fn is_editable() -> bool {
+pub fn is_not_editable() -> bool {
     if let Ok(info) = dna_info() {
-        return is_editable_sb(&info.properties);
+        return is_not_editable_sb(&info.properties);
     }
-    true
+    false
 }
 
 /// Deserialize properties into the Props expected by this zome
-pub fn is_editable_sb(encoded_props: &SerializedBytes) -> bool {
+pub fn is_not_editable_sb(encoded_props: &SerializedBytes) -> bool {
     let maybe_props = Props::try_from(encoded_props.to_owned());
     if let Ok(props) = maybe_props {
         return props.not_editable_profile;
     }
-    true
+    false
 }
