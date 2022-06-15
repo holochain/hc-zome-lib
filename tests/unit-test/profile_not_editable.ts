@@ -8,7 +8,7 @@ module.exports = (orchestrator) => {
 		let [alice_happ, bobbo_happ] = await installAgents(
 			conductor,
 			['alice', 'bobbo'],
-			false
+			true
 		)
 		const [alice] = alice_happ.cells
 		const [bobbo] = bobbo_happ.cells
