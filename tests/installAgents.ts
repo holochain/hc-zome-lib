@@ -42,7 +42,7 @@ export const installJCHapp = async (
 export const installAgents = async (
  conductor: Player,
  agentNames: string[],
- is_editable_profile: boolean,
+ is_editable_profile?: boolean,
  jcHapp?: InstalledHapp,
  memProofMutator: (memproof: Memproof) => Memproof = (m) => m
 ): Promise<InstalledHapp[]> => {
