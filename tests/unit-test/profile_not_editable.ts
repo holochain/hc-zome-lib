@@ -13,7 +13,7 @@ module.exports = (orchestrator) => {
 		const [alice] = alice_happ.cells
 		const [bobbo] = bobbo_happ.cells
 
-		// Create a channel
+		// Create a profile
 		const profile_input = {
 			nickname: 'Alice',
 			avatar_url: 'https://alice.img',
