@@ -73,10 +73,10 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
 
 #[derive(Debug, Serialize, Deserialize, SerializedBytes, Clone)]
 struct Props {
-    is_editable_profile: bool,
+    not_editable_profile: bool,
 }
 
-/// Checking properties for `is_editable_profile` flag
+/// Checking properties for `not_editable_profile` flag
 pub fn is_editable() -> bool {
     if let Ok(info) = dna_info() {
         return is_editable_sb(&info.properties);
@@ -88,7 +88,7 @@ pub fn is_editable() -> bool {
 pub fn is_editable_sb(encoded_props: &SerializedBytes) -> bool {
     let maybe_props = Props::try_from(encoded_props.to_owned());
     if let Ok(props) = maybe_props {
-        return props.is_editable_profile;
+        return props.not_editable_profile;
     }
     true
 }
