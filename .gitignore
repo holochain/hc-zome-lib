@@ -5,3 +5,4 @@ dist/
 *.dna
 *.happ
 nix.log
+.vscode

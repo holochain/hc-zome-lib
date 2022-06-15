@@ -23,16 +23,6 @@ fn get_profile(agent_address: WrappedAgentPubKey) -> ExternResult<Profile> {
     Ok(handler::__get_profile(AgentPubKey::from(agent_address))?)
 }
 
-// #[hdk_extern]
-// fn validate_create_entry_profile(entry: ValidateData) -> ExternResult<ValidateCallbackResult> {
-//     Ok(validation::__validate_profile(entry)?)
-// }
-
-// #[hdk_extern]
-// fn validate_update_entry_profile(entry: ValidateData) -> ExternResult<ValidateCallbackResult> {
-//     Ok(validation::__validate_profile(entry)?)
-// }
-
 #[hdk_extern]
 fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
     match op {
@@ -52,7 +42,7 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                 },
         } => validation::__validate_entry(entry, header.author()),
         Op::RegisterDelete { .. } => Ok(ValidateCallbackResult::Invalid(
-            "Cannot update in Entry".to_string(),
+            "Invalid try to delete an Entry".to_string(),
         )),
         Op::RegisterUpdate {
             new_entry,
@@ -65,10 +55,40 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     ..
                 },
             ..
-        } => validation::__validate_entry(new_entry, &header.author),
+        } => {
+            if is_editable() {
+                validation::__validate_entry(new_entry, &header.author)
+            } else {
+                Ok(ValidateCallbackResult::Invalid(
+                    "Invalid try to Delete Entry".to_string(),
+                ))
+            }
+        }
         Op::RegisterDeleteLink { .. } => Ok(ValidateCallbackResult::Invalid(
-            "Cannot update Link".to_string(),
+            "Invalid try to update Link".to_string(),
         )),
         _ => Ok(ValidateCallbackResult::Valid),
     }
+}
+
+#[derive(Debug, Serialize, Deserialize, SerializedBytes, Clone)]
+struct Props {
+    is_editable_profile: bool,
+}
+
+/// Checking properties for `is_editable_profile` flag
+pub fn is_editable() -> bool {
+    if let Ok(info) = dna_info() {
+        return is_editable_sb(&info.properties);
+    }
+    true
+}
+
+/// Deserialize properties into the Props expected by this zome
+pub fn is_editable_sb(encoded_props: &SerializedBytes) -> bool {
+    let maybe_props = Props::try_from(encoded_props.to_owned());
+    if let Ok(props) = maybe_props {
+        return props.is_editable_profile;
+    }
+    true
 }
