@@ -42,7 +42,7 @@ export const installJCHapp = async (
 export const installAgents = async (
 	conductor: Player,
 	agentNames: string[],
-	is_editable_profile?: boolean,
+	not_editable_profile?: boolean,
 	jcHapp?: InstalledHapp,
 	memProofMutator: (memproof: Memproof) => Memproof = (m) => m
 ): Promise<InstalledHapp[]> => {
@@ -54,7 +54,7 @@ export const installAgents = async (
 	const dnaHash = await conductor.registerDna(
 		{ path: dnaPath },
 		conductor.scenarioUID,
-		{ skip_proof: !jcHapp, holo_agent_override, is_editable_profile }
+		{ skip_proof: !jcHapp, holo_agent_override, not_editable_profile }
 	)
 	const admin = conductor.adminWs()
 
