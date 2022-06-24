@@ -29,14 +29,9 @@ pub fn __update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile
                 avatar_url: profile_input.avatar_url,
                 uniqueness: agent_address.clone().into(),
             };
-            create_entry(&profile)?;
+            create_entry(EntryTypes::Profile(profile.clone()))?;
             let profile_hash = hash_entry(&profile)?;
-            create_link(
-                agent_address,
-                profile_hash,
-                HdkLinkType::Any,
-                ProfileTag::tag(),
-            )?;
+            create_link(agent_address, profile_hash, LinkType(0), ProfileTag::tag())?;
             Ok(profile)
         }
     }

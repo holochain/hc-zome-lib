@@ -7,9 +7,9 @@ pub fn is_read_only_instance() -> bool {
     if skip_proof() {
         return false;
     }
-    if let Ok(entries) = &query(ChainQueryFilter::new().header_type(HeaderType::AgentValidationPkg))
+    if let Ok(entries) = &query(ChainQueryFilter::new().action_type(ActionType::AgentValidationPkg))
     {
-        if let Header::AgentValidationPkg(h) = entries[0].header() {
+        if let Action::AgentValidationPkg(h) = entries[0].action() {
             if let Some(mem_proof) = &h.membrane_proof {
                 if is_read_only_proof(&mem_proof) {
                     return true;
@@ -27,12 +27,18 @@ pub fn is_read_only_proof(mem_proof: &MembraneProof) -> bool {
 }
 
 /// This is the current structure of the payload the holo signs
-#[hdk_entry(id = "joining_code_payload")]
+#[hdk_entry_helper]
 #[derive(Clone)]
 pub struct JoiningCodePayload {
     pub role: String,
     pub record_locator: String,
     pub registered_agent: AgentPubKeyB64,
+}
+
+#[hdk_entry_defs]
+#[unit_enum(EntryTypesUnit)]
+pub enum EntryTypes {
+    JoiningCodePayload(JoiningCodePayload),
 }
 
 /// Validate joining code from the membrane_proof
@@ -47,11 +53,14 @@ pub fn validate_joining_code(
                 return Ok(ValidateCallbackResult::Valid);
             };
             // TODO: find a way to TryFrom a ref, to avoid cloning.
-            let mem_proof = Element::try_from((*mem_proof).clone())?;
+            let mem_proof = match Record::try_from((*mem_proof).clone()) {
+                Ok(r) => r,
+                Err(e) => return Err(wasm_error!(WasmErrorInner::Guest(e.to_string()))),
+            };
 
             trace!("Joining code provided: {:?}", mem_proof);
 
-            let joining_code_author = mem_proof.header().author().clone();
+            let joining_code_author = mem_proof.action().author().clone();
 
             if joining_code_author != progenitor_agent {
                 trace!("Joining code validation failed");
@@ -62,9 +71,9 @@ pub fn validate_joining_code(
             }
 
             let e = mem_proof.entry();
-            if let ElementEntry::Present(entry) = e {
+            if let RecordEntry::Present(entry) = e {
                 let signature = mem_proof.signature().clone();
-                match verify_signature(progenitor_agent, signature, mem_proof.header()) {
+                match verify_signature(progenitor_agent, signature, mem_proof.action()) {
                     Ok(verified) => {
                         if verified {
                             // check that the joining code has the correct author key in it

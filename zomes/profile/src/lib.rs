@@ -6,8 +6,6 @@ mod error;
 mod validation;
 use hc_utils::WrappedAgentPubKey;
 
-entry_defs![Profile::entry_def()];
-
 #[hdk_extern]
 fn update_my_profile(profile_input: ProfileInput) -> ExternResult<Profile> {
     Ok(handler::__update_my_profile(profile_input)?)
@@ -32,15 +30,15 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
         } => Ok(ValidateCallbackResult::Valid),
         Op::StoreEntry {
             entry,
-            header:
+            action:
                 SignedHashed {
                     hashed:
                         HoloHashed {
-                            content: header, ..
+                            content: action, ..
                         },
                     ..
                 },
-        } => validation::__validate_entry(entry, header.author()),
+        } => validation::__validate_entry(entry, action.author()),
         Op::RegisterDelete { .. } => Ok(ValidateCallbackResult::Invalid(
             "Invalid try to delete an Entry".to_string(),
         )),
@@ -50,7 +48,7 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                 SignedHashed {
                     hashed:
                         HoloHashed {
-                            content: header, ..
+                            content: action, ..
                         },
                     ..
                 },
@@ -61,7 +59,7 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     "Invalid try to Delete Entry".to_string(),
                 ))
             } else {
-                validation::__validate_entry(new_entry, &header.author)
+                validation::__validate_entry(new_entry, &action.author)
             }
         }
         Op::RegisterDeleteLink { .. } => Ok(ValidateCallbackResult::Invalid(

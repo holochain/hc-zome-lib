@@ -1,7 +1,5 @@
 use hdk::prelude::*;
 
-entry_defs![Path::entry_def()];
-
 #[hdk_extern]
 fn init(_: ()) -> ExternResult<InitCallbackResult> {
     Ok(InitCallbackResult::Pass)
@@ -21,20 +19,20 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
     match op {
         Op::StoreEntry {
             entry: Entry::Agent(_),
-            header:
+            action:
                 SignedHashed {
                     hashed:
                         HoloHashed {
-                            content: header, ..
+                            content: action, ..
                         },
                     ..
                 },
         } => {
             if !hc_joining_code::skip_proof() {
-                let header = header.prev_header();
-                match must_get_valid_element(header.clone()) {
-                    Ok(element_pkg) => match element_pkg.signed_header().header() {
-                        Header::AgentValidationPkg(pkg) => {
+                let action = action.prev_action();
+                match must_get_valid_record(action.clone()) {
+                    Ok(element_pkg) => match element_pkg.signed_action().action() {
+                        Action::AgentValidationPkg(pkg) => {
                             return hc_joining_code::validate_joining_code(
                                 hc_joining_code::holo_agent(&zome_info()?.properties)?,
                                 pkg.author.clone(),
@@ -50,7 +48,7 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     Err(e) => {
                         debug!("Error on get when validating agent entry: {:?}; treating as unresolved dependency",e);
                         return Ok(ValidateCallbackResult::UnresolvedDependencies(vec![
-                            (header.clone()).into(),
+                            (action.clone()).into(),
                         ]));
                     }
                 }

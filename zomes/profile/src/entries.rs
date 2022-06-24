@@ -1,13 +1,20 @@
 use hc_utils::*;
 use hdk::prelude::*;
 
-#[hdk_entry(id = "profile", visibility = "public", required_validations = 2)]
+#[hdk_entry_helper]
 #[derive(Clone)]
 pub struct Profile {
     pub agent_address: WrappedAgentPubKey,
     pub nickname: Option<String>,
     pub avatar_url: Option<String>,
     pub uniqueness: AnyDhtHash,
+}
+
+#[hdk_entry_defs]
+#[unit_enum(EntryTypesUnit)]
+pub enum EntryTypes {
+    #[entry_def(visibility = "public", required_validations = 2)]
+    Profile(Profile),
 }
 
 #[derive(Serialize, Deserialize, Debug, SerializedBytes)]
