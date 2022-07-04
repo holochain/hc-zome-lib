@@ -1,10 +1,10 @@
-use hdk::prelude::holo_hash::AgentPubKeyB64;
-use hdk::prelude::*;
+use holo_hash::AgentPubKey;
+use holochain_deterministic_integrity::prelude::*;
 
 #[derive(Debug, Serialize, Deserialize, SerializedBytes, Clone)]
 pub struct Props {
     pub skip_proof: bool,
-    pub holo_agent_override: Option<AgentPubKeyB64>,
+    pub holo_agent_override: Option<AgentPubKey>,
     pub development_stage: Option<String>,
     pub t_and_c: Option<String>,
     pub t_and_c_agreement: Option<String>,
@@ -17,8 +17,9 @@ pub fn holo_agent(encoded_props: &SerializedBytes) -> ExternResult<AgentPubKey> 
             return Ok(AgentPubKey::try_from(a).unwrap());
         }
     }
-    // This is a hard coded holo agent public key
-    Ok(AgentPubKey::try_from("uhCAkRHEsXSAebzKJtPsLY1XcNePAFIieFBtz2ATanlokxnSC1Kkz").unwrap())
+    Err(wasm_error!(WasmErrorInner::Guest(
+        "Cannot fetch get a holo-agent-override".to_string()
+    )))
 }
 
 pub fn skip_proof_sb(encoded_props: &SerializedBytes) -> bool {

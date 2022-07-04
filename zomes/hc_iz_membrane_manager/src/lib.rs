@@ -1,17 +1,16 @@
-use hdk::prelude::*;
-
-#[hdk_extern]
-fn init(_: ()) -> ExternResult<InitCallbackResult> {
-    Ok(InitCallbackResult::Pass)
-}
+use holochain_deterministic_integrity::prelude::*;
 
 #[hdk_extern]
 fn genesis_self_check(data: GenesisSelfCheckData) -> ExternResult<ValidateCallbackResult> {
-    if hc_joining_code::skip_proof_sb(&data.dna_info.properties) {
+    if membrane_manager_utils::skip_proof_sb(&data.dna_info.properties) {
         return Ok(ValidateCallbackResult::Valid);
     }
-    let holo_agent_key = hc_joining_code::holo_agent(&data.dna_info.properties)?;
-    hc_joining_code::validate_joining_code(holo_agent_key, data.agent_key, data.membrane_proof)
+    let holo_agent_key = membrane_manager_utils::holo_agent(&data.dna_info.properties)?;
+    membrane_manager_utils::validate_joining_code(
+        holo_agent_key,
+        data.agent_key,
+        data.membrane_proof,
+    )
 }
 
 #[hdk_extern]
@@ -28,13 +27,13 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     ..
                 },
         } => {
-            if !hc_joining_code::skip_proof() {
+            if !membrane_manager_utils::skip_proof() {
                 let action = action.prev_action();
                 match must_get_valid_record(action.clone()) {
                     Ok(element_pkg) => match element_pkg.signed_action().action() {
                         Action::AgentValidationPkg(pkg) => {
-                            return hc_joining_code::validate_joining_code(
-                                hc_joining_code::holo_agent(&zome_info()?.properties)?,
+                            return membrane_manager_utils::validate_joining_code(
+                                membrane_manager_utils::holo_agent(&zome_info()?.properties)?,
                                 pkg.author.clone(),
                                 pkg.membrane_proof.clone(),
                             )
@@ -45,8 +44,8 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                             ))
                         }
                     },
-                    Err(e) => {
-                        debug!("Error on get when validating agent entry: {:?}; treating as unresolved dependency",e);
+                    Err(_e) => {
+                        // debug!("Error on get when validating agent entry: {:?}; treating as unresolved dependency",e);
                         return Ok(ValidateCallbackResult::UnresolvedDependencies(vec![
                             (action.clone()).into(),
                         ]));

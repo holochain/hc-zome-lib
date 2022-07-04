@@ -1,25 +1,5 @@
-mod entries;
-mod handler;
-use entries::*;
-use hdk::prelude::*;
-mod error;
-mod validation;
-use hc_utils::WrappedAgentPubKey;
-
-#[hdk_extern]
-fn update_my_profile(profile_input: ProfileInput) -> ExternResult<Profile> {
-    Ok(handler::__update_my_profile(profile_input)?)
-}
-
-#[hdk_extern]
-fn get_my_profile(_: ()) -> ExternResult<Profile> {
-    Ok(handler::__get_my_profile()?)
-}
-
-#[hdk_extern]
-fn get_profile(agent_address: WrappedAgentPubKey) -> ExternResult<Profile> {
-    Ok(handler::__get_profile(AgentPubKey::from(agent_address))?)
-}
+use crate::entries::*;
+use holochain_deterministic_integrity::prelude::*;
 
 #[hdk_extern]
 fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
@@ -38,7 +18,7 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                         },
                     ..
                 },
-        } => validation::__validate_entry(entry, action.author()),
+        } => validate_entry(entry, action.author()),
         Op::RegisterDelete { .. } => Ok(ValidateCallbackResult::Invalid(
             "Invalid try to delete an Entry".to_string(),
         )),
@@ -59,7 +39,7 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     "Invalid try to Delete Entry".to_string(),
                 ))
             } else {
-                validation::__validate_entry(new_entry, &action.author)
+                validate_entry(new_entry, &action.author)
             }
         }
         Op::RegisterDeleteLink { .. } => Ok(ValidateCallbackResult::Invalid(
@@ -89,4 +69,27 @@ pub fn is_not_editable_sb(encoded_props: &SerializedBytes) -> bool {
         return props.not_editable_profile;
     }
     false
+}
+
+pub fn validate_entry(entry: Entry, author: &AgentPubKey) -> ExternResult<ValidateCallbackResult> {
+    match entry {
+        Entry::App(_) => match entry.try_into() {
+            Ok(Profile {
+                agent_address,
+                nickname: _,
+                avatar_url: _,
+                uniqueness: _,
+            }) => {
+                if &AgentPubKey::from(agent_address) == author {
+                    Ok(ValidateCallbackResult::Valid)
+                } else {
+                    Ok(ValidateCallbackResult::Invalid(
+                        "Profile for {:?} is created by invalid agent {:?}".to_string(),
+                    ))
+                }
+            }
+            _ => Ok(ValidateCallbackResult::Valid),
+        },
+        _ => Ok(ValidateCallbackResult::Valid),
+    }
 }
