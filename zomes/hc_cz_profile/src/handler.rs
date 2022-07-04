@@ -1,11 +1,11 @@
 extern crate serde;
-use crate::entries::*;
+use super::ProfileInput;
 use crate::error::{ProfileError, ProfileResult};
-use hc_utils::*;
+use hc_iz_profile::*;
 use hdk::prelude::*;
 
 pub fn __update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile> {
-    // Chcek if the profile Exist
+    // Check if the profile Exist
     // Get your agent key
     debug!("Start updating your profile...");
     let agent_address = agent_info()?.agent_initial_pubkey;
@@ -13,7 +13,7 @@ pub fn __update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile
         Ok(old_data) => {
             let old_profile_header = hc_utils::get_header(hash_entry(&old_data)?).unwrap();
             let profile = Profile {
-                agent_address: WrappedAgentPubKey(agent_address),
+                agent_address: agent_address.into(),
                 nickname: profile_input.nickname,
                 avatar_url: profile_input.avatar_url,
                 uniqueness: old_profile_header.clone().into(),
@@ -24,14 +24,19 @@ pub fn __update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile
         Err(_) => {
             // Create new Profile
             let profile = Profile {
-                agent_address: WrappedAgentPubKey(agent_address.clone()),
+                agent_address: agent_address.clone().into(),
                 nickname: profile_input.nickname,
                 avatar_url: profile_input.avatar_url,
                 uniqueness: agent_address.clone().into(),
             };
             create_entry(EntryTypes::Profile(profile.clone()))?;
             let profile_hash = hash_entry(&profile)?;
-            create_link(agent_address, profile_hash, LinkType(0), ProfileTag::tag())?;
+            create_link(
+                agent_address,
+                profile_hash,
+                LinkTypes::ProfileLink,
+                ProfileTag::tag(),
+            )?;
             Ok(profile)
         }
     }
@@ -46,7 +51,7 @@ pub fn __get_my_profile() -> ProfileResult<Profile> {
 
 pub fn __get_profile(agent_address: AgentPubKey) -> ProfileResult<Profile> {
     let default_profile = Profile {
-        agent_address: WrappedAgentPubKey(agent_address.clone()),
+        agent_address: agent_address.clone().into(),
         nickname: None,
         avatar_url: None,
         uniqueness: agent_address.clone().into(),
