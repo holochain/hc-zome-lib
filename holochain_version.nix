@@ -21,8 +21,8 @@
 
     lair = {
         url = "https://github.com/holochain/lair";
-        rev = "v0.0.10";
-        sha256 = "sha256-yBCsdtC6vYnGQL1JkLkOzECk1TD4RoFzNARdsc+J0cg=";
+        rev = "lair_keystore-v0.2.0";
+        sha256 = "sha256-n7nZyZR0Q68Uff7bTSVFtSDLi21CNcyKibOBx55Gasg=";
 
         binsFilter = [
             "lair-keystore"

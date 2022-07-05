@@ -1,6 +1,6 @@
 {
-    "hdk": "0.0.138",
-    "hc_utils": "0.0.138",
-    "holochain_rev": "holochain-0.0.145",
-    "lair_rev": "27e3a4e305e2a5d48ba625aa3bfac9516d2583ed"
+	"hdk": "0.0.138",
+	"hc_utils": "0.0.138",
+	"holochain_rev": "holochain-0.0.145",
+	"lair_rev": "lair_keystore-v0.2.0"
 }
