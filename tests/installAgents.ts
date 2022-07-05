@@ -5,6 +5,7 @@ import {
   Dnas
 } from '@holochain/tryorama';
 import path from 'path';
+import { inspect } from 'util';
 import { fileURLToPath } from 'url';
 import * as msgpack from '@msgpack/msgpack';
 import { InstallAgentsArgs, Memproof } from './types';
@@ -27,10 +28,7 @@ export const installMemProofHapp = async (
 	const [memProofHapp] = await conductor.installAgentsHapps({
 		agentsDnas: [{
 			dnas: [{ 
-				source: jcFactoryDna,
-				properties: {
-					roleId: 'jc'
-				}
+				source: jcFactoryDna
 			}],
 			agentPubKey: holo_agent_override
     }],
@@ -48,11 +46,11 @@ export const installAgentHapps = async ({
   memProofHapp = undefined,
   memProofHandler = (m) => m,
 }: InstallAgentsArgs): Promise<AgentHapp[]> => {
-  console.log('>>>>>>>>>>>>>')
-  let players: AgentHapp[] = []
+  let agents: AgentHapp[] = []
+  console.log('number_of_agents : ', number_of_agents)
   for (let i = 0; i < number_of_agents; i++) {
 	  const agentPubKey = await conductor.adminWs().generateAgentPubKey()
-	  console.log(`Generated new agent key: ${Codec.AgentId.encode(agentPubKey)}`)
+	  console.log(`Generated agent #${i+1} pubkey: ${Codec.AgentId.encode(agentPubKey)}`)
 	  
     let membraneProof;
     // NB: Comment in below when you want to test with mem-proofs
@@ -77,20 +75,23 @@ export const installAgentHapps = async ({
       properties: { 
         skip_proof: !memProofHapp, 
         holo_agent_override: memProofHapp?.agentPubKey,
-        not_editable_profile,
-        roleId: 'hc-zomes'
+        not_editable_profile
       }
     }
-
-    players.push(await conductor.installAgentsHapps({
-      agentsDnas: [{
-        dnas: [dnaOptions],
-        agentPubKey
-      }],
-      uid: scenario_uid
-    })[0])
-	
-    console.log(`Registered new player for dna at : ${dnaPath}`)
+    try {
+      const [newAgentHapp] = await conductor.installAgentsHapps({
+        agentsDnas: [{
+          dnas: [dnaOptions],
+          agentPubKey
+        }],
+        uid: scenario_uid
+      })
+      console.log(`Registered new happ for Agent #${i+1} : ${inspect(newAgentHapp)}`)
+      agents.push(newAgentHapp)
+    } catch (e) {
+      console.error('Error installing agent happs', inspect(e))
+      throw e
+    }
   }
-  return players
+  return agents
 }

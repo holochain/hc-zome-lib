@@ -6,3 +6,5 @@ dist/
 *.happ
 nix.log
 .vscode
+
+tests/*.hc*

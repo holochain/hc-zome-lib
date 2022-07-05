@@ -7,11 +7,11 @@ integrity:
   zomes:
     - name: hc_iz_membrane_manager
       bundled: './target/wasm32-unknown-unknown/release/hc_iz_membrane_manager.wasm'
-#     - name: hc_iz_profile
-#       bundled: './target/wasm32-unknown-unknown/release/hc_iz_profile.wasm'
-# coordinator:
-#   zomes:
-#     - name: hc_cz_profile
-#       bundled: './target/wasm32-unknown-unknown/release/hc_cz_profile.wasm'
-#       dependencies:
-#         - name: hc_iz_profile
+    - name: hc_iz_profile
+      bundled: './target/wasm32-unknown-unknown/release/hc_iz_profile.wasm'
+coordinator:
+  zomes:
+    - name: hc_cz_profile
+      bundled: './target/wasm32-unknown-unknown/release/hc_cz_profile.wasm'
+      dependencies:
+        - name: hc_iz_profile
