@@ -2,7 +2,7 @@ import { Codec } from '@holo-host/cryptolib';
 import {
   AgentHapp,
 	Conductor,
-  Dnas
+  Dna
 } from '@holochain/tryorama';
 import path from 'path';
 import { inspect } from 'util';
@@ -69,7 +69,7 @@ export const installAgentHapps = async ({
     // 	membraneProof = Array.from(msgpack.encode(mutated))
     // }
 
-    const dnaOptions: Dnas = {
+    const dnaOptions: Dna = {
       source: dnaPath,
       membraneProof,
       properties: { 
