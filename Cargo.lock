@@ -509,6 +509,7 @@ version = "0.1.0"
 dependencies = [
  "holochain_deterministic_integrity",
  "membrane_manager_utils",
+ "serde",
 ]
 
 [[package]]
