@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "TRYORAMA_LOG_LEVEL=error RUST_BACKTRACE=1 node --loader ts-node/esm unit-test/index.ts",
+    "test": "TRYORAMA_LOG_LEVEL=error RUST_BACKTRACE=1 node --loader ts-node/esm unit-test/index.ts | tap-diff",
     "test-debug": "RUST_LOG=[debug]=debug node --loader ts-node/esm unit-test/index.ts"
   },
   "authors": [
@@ -16,6 +16,7 @@
     "@holo-host/cryptolib": "^0.3.2",
     "@holochain/client": "^0.6.0",
     "@holochain/tryorama": "0.6.2",
+    "tap-diff": "^0.1.1",
     "@msgpack/msgpack": "^2.7.2",
     "tape": "^5.5.3",
     "tape-promise": "^4.0.0",
