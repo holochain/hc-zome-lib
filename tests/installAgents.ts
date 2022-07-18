@@ -53,21 +53,21 @@ export const installAgentHapps = async ({
 	  console.log(`Generated agent #${i+1} pubkey: ${Codec.AgentId.encode(agentPubKey)}`)
 	  
     let membraneProof;
-    // NB: Comment in below when you want to test with mem-proofs
-    // Without below, tests default to all the dnas being tested with read only mem-proof
-    // if (!!memProofHapp) {
-    // 	const membrane_proof: Memproof = await memProofHapp.cells[0].callZome({
-    // 		zome_name: 'code-generator',
-    // 		fn_name: 'make_proof',
-    // 		payload: {
-    // 			role: "ROLE",
-    // 			record_locator: "RECORD_LOCATOR",
-    // 			registered_agent: Codec.AgentId.encode(agentPubKey)
-    // 		}
-    // 	});
-    // 	const mutated = memProofHandler(membrane_proof)
-    // 	membraneProof = Array.from(msgpack.encode(mutated))
-    // }
+
+    // Without memproof assignment below, tests default to all the dnas being tested with read only mem-proof
+    if (!!memProofHapp) {
+    	const membrane_proof: Memproof = await memProofHapp.cells[0].callZome({
+    		zome_name: 'code-generator',
+    		fn_name: 'make_proof',
+    		payload: {
+    			role: "ROLE",
+    			record_locator: "RECORD_LOCATOR",
+    			registered_agent: Codec.AgentId.encode(agentPubKey)
+    		}
+    	});
+    	const mutated = memProofHandler(membrane_proof)
+    	membraneProof = Array.from(msgpack.encode(mutated))
+    }
 
     const dnaOptions: Dna = {
       source: dnaPath,
