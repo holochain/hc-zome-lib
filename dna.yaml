@@ -1,10 +1,17 @@
 ---
-manifest_version: "1"
+manifest_version: '1'
 name: hc-zomes
 uid: 9a28aac8-337c-11eb-adc1-0Z02acw20115
 properties: ~
-zomes:
-  - name: profile
-    bundled: "./target/wasm32-unknown-unknown/release/profile.wasm"
-  - name: membrane_manager
-    bundled: "./target/wasm32-unknown-unknown/release/membrane_manager_lib.wasm"
+integrity:
+  zomes:
+    - name: hc_iz_membrane_manager
+      bundled: './target/wasm32-unknown-unknown/release/hc_iz_membrane_manager.wasm'
+    - name: hc_iz_profile
+      bundled: './target/wasm32-unknown-unknown/release/hc_iz_profile.wasm'
+coordinator:
+  zomes:
+    - name: hc_cz_profile
+      bundled: './target/wasm32-unknown-unknown/release/hc_cz_profile.wasm'
+      dependencies:
+        - name: hc_iz_profile

@@ -1,0 +1,14 @@
+[package]
+name = "hc_iz_membrane_manager"
+version = "0.1.0"
+authors = ["zo-el <joelulahanna@gmail.com>"]
+edition = "2021"
+
+[lib]
+name = "hc_iz_membrane_manager"
+crate-type = [ "cdylib", "rlib" ]
+
+[dependencies]
+serde = "1.0.139"
+holochain_deterministic_integrity = "=0.0.10"
+membrane_manager_utils = {path = "../../crates/membrane_manager_utils"}

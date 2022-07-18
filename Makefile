@@ -61,7 +61,7 @@ test-unit:
 	RUST_BACKTRACE=1 cargo test \
 	    -- --nocapture
 
-test-dna:	$(DNA) FORCE DNAs
+test-dna: $(DNA) FORCE DNAs
 	@echo "Starting Scenario tests in $$(pwd)..."; \
 	    cd tests && ( [ -d  node_modules ] || npm install ) && npm test
 
@@ -84,13 +84,16 @@ test-e2e:	test-dna
 update:
 	echo '⚙️  Updating hdk crate...'
 	cargo upgrade hdk@=$(shell jq .hdk ./version-manager.json) --workspace
+	echo '⚙️  Updating holochain_deterministic_integrity crate...'
+	cargo upgrade holochain_deterministic_integrity@=$(shell jq .hdi ./version-manager.json) --workspace
 	echo '⚙️  Updating hc_utils crate...'
 	cargo upgrade hc_utils@=$(shell jq .hc_utils ./version-manager.json) --workspace	
-	echo '⚙️  Updating holochainVersionId in nix...'
-	sed -i -e 's/^    rev = .*/    rev = $(shell jq .holochain_rev ./version-manager.json);/' holochain_version.nix;\
-	sed -i -e 's/^    sha256 = .*/    sha256 = "$(shell nix-prefetch-url --unpack "https://github.com/holochain/holochain/archive/$(shell jq .holochain_rev ./version-manager.json).tar.gz")";/' holochain_version.nix;\
-	sed -i -e 's/^        rev = .*/        rev = $(shell jq .lair_rev ./version-manager.json);/' holochain_version.nix;\
-	sed -i -e 's/^        sha256 = .*/        sha256 = "$(shell nix-prefetch-url --unpack "https://github.com/holochain/lair/archive/$(shell jq .lair_rev ./version-manager.json).tar.gz")";/' holochain_version.nix;\
+	echo '⚙️  Updating holonix...'
+	nix-shell --run "niv update"
+	echo '⚙️  Updating holochain_version in nix...'
+	nix-shell --pure https://github.com/holochain/holochain-nixpkgs/archive/develop.tar.gz \
+		--arg flavors '["release"]' \
+		--run "update-holochain-versions --git-src=revision:$(shell jq .holochain_rev ./version-manager.json)  --lair-version-req=$(shell jq .lair_rev ./version-manager.json) --output-file=holochain_version.nix"
 	echo '⚙️  Building dnas and happ...'
 	rm -rf Cargo.lock
 	make nix-build

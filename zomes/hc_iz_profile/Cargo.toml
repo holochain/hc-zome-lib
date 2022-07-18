@@ -1,15 +1,13 @@
 [package]
-name = "profile"
+name = "hc_iz_profile"
 version = "0.1.0"
 authors = ["zo-el <joelulahanna@gmail>"]
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-name = "profile"
+name = "hc_iz_profile"
 
 [dependencies]
-serde = "1.0"
-thiserror = "1.0"
-hdk = "=0.0.133"
-hc_utils = "=0.0.133"
+serde = "1.0.139"
+holochain_deterministic_integrity = "=0.0.10"

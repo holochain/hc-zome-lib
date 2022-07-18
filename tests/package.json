@@ -1,24 +1,30 @@
 {
   "name": "hc-zomes",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "TRYORAMA_LOG_LEVEL=error RUST_BACKTRACE=1 TRYORAMA_HOLOCHAIN_PATH=\"holochain\" ts-node unit-test/index.ts",
-    "test-debug": "RUST_LOG=[debug]=debug TRYORAMA_HOLOCHAIN_PATH=\"holochain\" ts-node unit-test/index.ts"
+    "test": "TRYORAMA_LOG_LEVEL=error RUST_BACKTRACE=1 node --loader ts-node/esm unit-test/index.ts | tap-diff",
+    "test-debug": "RUST_LOG=[debug]=debug node --loader ts-node/esm unit-test/index.ts"
   },
-  "author": "zo-el<joelulahanna@gmail.com>",
+  "authors": [
+    "zo-el<joelulahanna@gmail.com>",
+    "jetttech<lisa.jetton@holo.host>"
+  ],
   "license": "ISC",
   "dependencies": {
-    "@holo-host/cryptolib": "^0.3.1",
-    "lodash": "^4.17.19",
-    "tape": "^5.0.1",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.6"
+    "@holo-host/cryptolib": "^0.3.2",
+    "@holochain/client": "^0.6.0",
+    "@holochain/tryorama": "0.6.2",
+    "tap-diff": "^0.1.1",
+    "@msgpack/msgpack": "^2.7.2",
+    "tape": "^5.5.3",
+    "tape-promise": "^4.0.0",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
   },
   "devDependencies": {
-    "@holochain/tryorama": "^0.4",
-    "@types/lodash": "^4.14.158",
-    "@types/node": "^14.0.14"
+    "@types/tape": "^4.13.2",
+    "@types/tape-promise": "^4.0.1"
   }
 }

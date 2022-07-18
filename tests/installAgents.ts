@@ -1,98 +1,97 @@
-const { Codec } = require('@holo-host/cryptolib')
-import * as path from 'path'
-import * as msgpack from '@msgpack/msgpack'
-import { InstalledHapp, Player } from '@holochain/tryorama'
+import { Codec } from '@holo-host/cryptolib';
+import {
+  AgentHapp,
+    Conductor,
+  Dna
+} from '@holochain/tryorama';
+import path from 'path';
+import { inspect } from 'util';
+import { fileURLToPath } from 'url';
+import * as msgpack from '@msgpack/msgpack';
+import { InstallAgentsArgs, Memproof } from './types';
 
-const dnaConfiguration = {
-	role_id: 'hc-zomes',
+const __filename = fileURLToPath(import.meta.url);
+
+const dnaPath = {
+  path: path.join(path.dirname(__filename), '../hc-zomes.dna')
+};
+
+const jcFactoryDna = {
+  path: path.join(path.dirname(__filename), '../dnas/joining-code-factory.dna')
 }
-const dnaPath = path.join(__dirname, '../hc-zomes.dna')
-const jcFactoryDna = path.join(__dirname, '../dnas/joining-code-factory.dna')
-const installedAppId = (agentName) => `${agentName}_hc-zomes`
 
-export type Memproof = {
-	signed_header: {
-		header: any
-		signature: Buffer
-	}
-	entry: any
-}
-
-export const installJCHapp = async (
-	conductor: Player
-): Promise<InstalledHapp> => {
-	const admin = conductor.adminWs()
-	const holo_agent_override = await admin.generateAgentPubKey()
-	let happ = await conductor._installHapp({
-		installed_app_id: `holo_agent_override`,
-		agent_key: holo_agent_override,
-		dnas: [
-			{
-				hash: await conductor.registerDna(
-					{ path: jcFactoryDna },
-					conductor.scenarioUID
-				),
-				role_id: 'jc',
-			},
-		],
+export const installMemProofHapp = async (
+	conductor: Conductor,
+	scenario_uid?: string,
+): Promise<AgentHapp> => {
+	const holo_agent_override = await conductor.adminWs().generateAgentPubKey()
+	const [memProofHapp] = await conductor.installAgentsHapps({
+		agentsDnas: [{
+			dnas: [{ 
+				source: jcFactoryDna
+			}],
+			agentPubKey: holo_agent_override
+    }],
+	  uid: scenario_uid,
+		installedAppId: `holo_agent_override`
 	})
-	return happ
+  return memProofHapp
 }
 
-export const installAgents = async (
-	conductor: Player,
-	agentNames: string[],
-	not_editable_profile?: boolean,
-	jcHapp?: InstalledHapp,
-	memProofMutator: (memproof: Memproof) => Memproof = (m) => m
-): Promise<InstalledHapp[]> => {
-	let holo_agent_override = undefined
-	if (!!jcHapp) {
-		holo_agent_override = Codec.AgentId.encode(jcHapp.agent)
-	}
-	console.log(`registering dna for: ${dnaPath}`)
-	const dnaHash = await conductor.registerDna(
-		{ path: dnaPath },
-		conductor.scenarioUID,
-		{ skip_proof: !jcHapp, holo_agent_override, not_editable_profile }
-	)
-	const admin = conductor.adminWs()
+export const installAgentHapps = async ({
+  conductor,
+  scenario_uid,
+  number_of_agents,
+  not_editable_profile,
+  memProofHapp = undefined,
+  memProofHandler = (m) => m,
+}: InstallAgentsArgs): Promise<AgentHapp[]> => {
+  let agents: AgentHapp[] = []
+  console.log('number_of_agents : ', number_of_agents)
+  for (let i = 0; i < number_of_agents; i++) {
+	  const agentPubKey = await conductor.adminWs().generateAgentPubKey()
+	  console.log(`Generated agent #${i+1} pubkey: ${Codec.AgentId.encode(agentPubKey)}`)
+	  
+    let membraneProof;
 
-	const agents: Array<InstalledHapp> = []
-	for (const i in agentNames) {
-		const agent = agentNames[i]
-		console.log(`generating key for: ${agent}:`)
-		const agent_key = await admin.generateAgentPubKey()
-		console.log(`${agent} pubkey:`, Codec.AgentId.encode(agent_key))
+    // Without memproof assignment below, tests default to all the dnas being tested with read only mem-proof
+    if (!!memProofHapp) {
+    	const membrane_proof: Memproof = await memProofHapp.cells[0].callZome({
+    		zome_name: 'code-generator',
+    		fn_name: 'make_proof',
+    		payload: {
+    			role: "ROLE",
+    			record_locator: "RECORD_LOCATOR",
+    			registered_agent: Codec.AgentId.encode(agentPubKey)
+    		}
+    	});
+    	const mutated = memProofHandler(membrane_proof)
+    	membraneProof = Array.from(msgpack.encode(mutated))
+    }
 
-		let dna = {
-			hash: dnaHash,
-			...dnaConfiguration,
-		}
-		// all the dna's will be tested with read only mem-proof
-		dna['membrane_proof'] = [0]
-		// use when you want to test with mem-proofs
-		// Not needed for the current zomes
-		// if (!!jcHapp) {
-		//   const membrane_proof = await jcHapp.cells[0].call('code-generator', 'make_proof', {
-		//     role: "ROLE",
-		//     record_locator: "RECORD_LOCATOR",
-		//     registered_agent: Codec.AgentId.encode(agent_key)
-		//   });
-		//   const mutated = memProofMutator(membrane_proof)
-		//   dna["membrane_proof"] = Array.from(msgpack.encode(mutated))
-		// }
-
-		const req = {
-			installed_app_id: installedAppId(agent),
-			agent_key,
-			dnas: [dna],
-		}
-		console.log(`installing happ for: ${agent}`)
-		let installed = await conductor._installHapp(req)
-		console.log(`${installedAppId(agent)} installed`)
-		agents.push(installed)
-	}
-
-	return agents
+    const dnaOptions: Dna = {
+      source: dnaPath,
+      membraneProof,
+      properties: { 
+        skip_proof: !memProofHapp, 
+        holo_agent_override: memProofHapp?.agentPubKey,
+        not_editable_profile
+      }
+    }
+    try {
+      const [newAgentHapp] = await conductor.installAgentsHapps({
+        agentsDnas: [{
+          dnas: [dnaOptions],
+          agentPubKey
+        }],
+        uid: scenario_uid
+      })
+      console.log(`Registered new happ for Agent #${i+1} : ${inspect(newAgentHapp)}`)
+      agents.push(newAgentHapp)
+    } catch (e) {
+      console.error('Error installing agent happs', inspect(e))
+      throw e
+    }
+  }
+  return agents
 }

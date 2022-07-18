@@ -18,6 +18,6 @@ pub type ProfileResult<T> = Result<T, ProfileError>;
 
 impl From<ProfileError> for WasmError {
     fn from(c: ProfileError) -> Self {
-        WasmError::Guest(c.to_string())
+        wasm_error!(WasmErrorInner::Guest(c.to_string()))
     }
 }
