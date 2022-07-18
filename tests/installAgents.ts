@@ -1,7 +1,7 @@
 import { Codec } from '@holo-host/cryptolib';
 import {
   AgentHapp,
-	Conductor,
+    Conductor,
   Dna
 } from '@holochain/tryorama';
 import path from 'path';
