@@ -9,6 +9,6 @@ name = "membrane_manager_utils"
 crate-type = [ "cdylib", "rlib" ]
 
 [dependencies]
-serde = "=1.0.138"
+serde = "=1.0.139"
 derive_more = "=0.99.17"
 holochain_deterministic_integrity = "=0.0.10"

@@ -9,5 +9,5 @@ crate-type = ["cdylib", "rlib"]
 name = "hc_iz_profile"
 
 [dependencies]
-serde = "=1"
+serde = "1.0.139"
 holochain_deterministic_integrity = "=0.0.10"

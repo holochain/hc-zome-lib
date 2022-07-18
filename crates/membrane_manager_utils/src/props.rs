@@ -1,4 +1,3 @@
-use holo_hash::AgentPubKey;
 use holochain_deterministic_integrity::prelude::*;
 
 #[derive(Debug, Serialize, Deserialize, SerializedBytes, Clone)]
