@@ -11,7 +11,7 @@ pub fn __update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile
     let agent_address = agent_info()?.agent_initial_pubkey;
     match is_registered() {
         Ok(old_data) => {
-            let old_profile_header = hc_utils::get_header(hash_entry(&old_data)?).unwrap();
+            let old_profile_header = hc_utils::get_action(hash_entry(&old_data)?).unwrap();
             let profile = Profile {
                 agent_address: agent_address.into(),
                 nickname: profile_input.nickname,

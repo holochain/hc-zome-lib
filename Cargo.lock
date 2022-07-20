@@ -522,9 +522,9 @@ dependencies = [
 
 [[package]]
 name = "hc_utils"
-version = "0.0.138"
+version = "0.0.138-patch1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "95ff3e9e5ed3a7b06015b9713d7bf1afebcb1d96a3a60be7da0b3e545695fce7"
+checksum = "6bb0d9585eb1470fb24b3c234aa664692bf5a306a9dbaaf85794dfffb47b6593"
 dependencies = [
  "hdk",
  "holochain_deterministic_integrity",

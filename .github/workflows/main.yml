@@ -25,11 +25,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Configure Nix substituters
-        run: |
-          set -xe
-          mkdir -p ~/.config/nix/
-          cp ./.github/nix.conf ~/.config/nix/
       - uses: cachix/cachix-action@v10
         with:
           name: holochain-ci
