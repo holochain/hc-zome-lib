@@ -1,4 +1,4 @@
-use holochain_deterministic_integrity::prelude::*;
+use hdi::prelude::*;
 
 #[hdk_extern]
 fn genesis_self_check(data: GenesisSelfCheckData) -> ExternResult<ValidateCallbackResult> {
@@ -16,7 +16,7 @@ fn genesis_self_check(data: GenesisSelfCheckData) -> ExternResult<ValidateCallba
 #[hdk_extern]
 fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
     match op {
-        Op::StoreEntry {
+        Op::StoreEntry(StoreEntry {
             entry: Entry::Agent(_),
             action:
                 SignedHashed {
@@ -26,7 +26,7 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                         },
                     ..
                 },
-        } => {
+        }) => {
             if !membrane_manager_utils::skip_proof() {
                 let action = action.prev_action();
                 match must_get_valid_record(action.clone()) {
@@ -46,9 +46,9 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     },
                     Err(_e) => {
                         // debug!("Error on get when validating agent entry: {:?}; treating as unresolved dependency",e);
-                        return Ok(ValidateCallbackResult::UnresolvedDependencies(vec![
-                            (action.clone()).into(),
-                        ]));
+                        return Ok(ValidateCallbackResult::UnresolvedDependencies(
+                            UnresolvedDependencies::Hashes(vec![action.clone().into()]),
+                        ));
                     }
                 }
             }

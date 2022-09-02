@@ -1,14 +1,14 @@
 use crate::entries::*;
-use holochain_deterministic_integrity::prelude::*;
+use hdi::prelude::*;
 
 #[hdk_extern]
 fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
     match op {
-        Op::StoreEntry {
+        Op::StoreEntry(StoreEntry {
             entry: Entry::Agent(_),
             ..
-        } => Ok(ValidateCallbackResult::Valid),
-        Op::StoreEntry {
+        }) => Ok(ValidateCallbackResult::Valid),
+        Op::StoreEntry(StoreEntry {
             entry,
             action:
                 SignedHashed {
@@ -18,11 +18,11 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                         },
                     ..
                 },
-        } => validate_entry(entry, action.author()),
-        Op::RegisterDelete { .. } => Ok(ValidateCallbackResult::Invalid(
+        }) => validate_entry(entry, action.author()),
+        Op::RegisterDelete(_) => Ok(ValidateCallbackResult::Invalid(
             "Invalid try to delete an Entry".to_string(),
         )),
-        Op::RegisterUpdate {
+        Op::RegisterUpdate(RegisterUpdate {
             new_entry,
             update:
                 SignedHashed {
@@ -33,16 +33,19 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     ..
                 },
             ..
-        } => {
+        }) => {
             if is_not_editable() {
-                Ok(ValidateCallbackResult::Invalid(
+                return Ok(ValidateCallbackResult::Invalid(
                     "Invalid try to Delete Entry".to_string(),
-                ))
+                ));
             } else {
-                validate_entry(new_entry, &action.author)
+                if new_entry.is_some() {
+                    return validate_entry(new_entry.unwrap(), &action.author);
+                }
+                return Ok(ValidateCallbackResult::Valid);
             }
         }
-        Op::RegisterDeleteLink { .. } => Ok(ValidateCallbackResult::Invalid(
+        Op::RegisterDeleteLink(_) => Ok(ValidateCallbackResult::Invalid(
             "Invalid try to update Link".to_string(),
         )),
         _ => Ok(ValidateCallbackResult::Valid),

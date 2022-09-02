@@ -1,4 +1,5 @@
-use holochain_deterministic_integrity::prelude::*;
+use hdi::prelude::UnresolvedDependencies;
+use hdi::prelude::*;
 
 /// IMPORTANT:  Due to recent changes to restructure zome into integrity and co-ordinator zomes,
 ///             this function can only exist within co-ordinator zomes. As such, if this function is required in your DNA,
@@ -97,9 +98,9 @@ pub fn validate_joining_code(
                     }
                     Err(_e) => {
                         // trace!("Error on get when verifying signature of agent entry: {:?}; treating as unresolved dependency",e);
-                        Ok(ValidateCallbackResult::UnresolvedDependencies(vec![
-                            (author).into(),
-                        ]))
+                        Ok(ValidateCallbackResult::UnresolvedDependencies(
+                            UnresolvedDependencies::Hashes(vec![author.into()]),
+                        ))
                     }
                 }
             } else {

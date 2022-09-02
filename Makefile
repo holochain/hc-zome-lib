@@ -83,17 +83,17 @@ test-e2e:	test-dna
 
 update:
 	echo '⚙️  Updating hdk crate...'
-	cargo upgrade hdk@=$(shell jq .hdk ./version-manager.json) --workspace
-	echo '⚙️  Updating holochain_deterministic_integrity crate...'
-	cargo upgrade holochain_deterministic_integrity@=$(shell jq .hdi ./version-manager.json) --workspace
+	cargo upgrade hdk@=$(shell jq .hdk ./version-manager.json) --workspace --pinned
+	echo '⚙️  Updating hdi crate...'
+	cargo upgrade hdi@=$(shell jq .hdi ./version-manager.json) --workspace --pinned
 	echo '⚙️  Updating hc_utils crate...'
-	cargo upgrade hc_utils@=$(shell jq .hc_utils ./version-manager.json) --workspace	
+	cargo upgrade hc_utils@=$(shell jq .hc_utils ./version-manager.json) --workspace --pinned
 	echo '⚙️  Updating holonix...'
 	nix-shell --run "niv update"
 	echo '⚙️  Updating holochain_version in nix...'
 	nix-shell --pure https://github.com/holochain/holochain-nixpkgs/archive/develop.tar.gz \
 		--arg flavors '["release"]' \
-		--run "update-holochain-versions --git-src=revision:$(shell jq .holochain_rev ./version-manager.json)  --lair-version-req=$(shell jq .lair_rev ./version-manager.json) --output-file=holochain_version.nix"
+		--run "update-holochain-versions --git-src=revision:$(shell jq .holochain_rev ./version-manager.json) --output-file=holochain_version.nix"
 	echo '⚙️  Building dnas and happ...'
 	rm -rf Cargo.lock
 	make nix-build
