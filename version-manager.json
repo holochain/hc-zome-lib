@@ -1,6 +1,6 @@
 {
-  "hdk": "0.0.150",
-  "hdi": "0.1.0",
-  "hc_utils": "0.0.150",
-  "holochain_rev": "holochain-0.0.160"
+  "hdk": "0.0.152",
+  "hdi": "0.1.2",
+  "hc_utils": "0.0.152",
+  "holochain_rev": "holochain-0.0.162"
 }

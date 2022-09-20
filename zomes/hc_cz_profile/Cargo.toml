@@ -11,6 +11,6 @@ name = "hc_cz_profile"
 [dependencies]
 serde = "1.0.139"
 thiserror = "1.0"
-hdk = {version = "=0.0.150", feature = ["encoding"]}
+hdk = {version = "=0.0.152", feature = ["encoding"]}
 hc_iz_profile = { path = "../hc_iz_profile" }
-hc_utils = "=0.0.150"
+hc_utils = "=0.0.152"
