@@ -11,4 +11,4 @@ crate-type = [ "cdylib", "rlib" ]
 [dependencies]
 serde = "=1.0.139"
 derive_more = "=0.99.17"
-hdi = "=0.1.2"
+hdi = "=0.1.3"

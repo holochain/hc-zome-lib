@@ -9,7 +9,7 @@ roles:
       deferred: false
     dna:
       bundled: ./hc-zomes.dna
-      properties: ~
-      uid: ~
-      version: ~
+      modifiers:
+        properties: ~
+        network_seed: ~
       clone_limit: 0
