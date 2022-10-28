@@ -33,7 +33,7 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     Ok(element_pkg) => match element_pkg.signed_action().action() {
                         Action::AgentValidationPkg(pkg) => {
                             return membrane_manager_utils::validate_joining_code(
-                                membrane_manager_utils::holo_agent(&zome_info()?.properties)?,
+                                membrane_manager_utils::holo_agent(&dna_info()?.properties)?,
                                 pkg.author.clone(),
                                 pkg.membrane_proof.clone(),
                             )
