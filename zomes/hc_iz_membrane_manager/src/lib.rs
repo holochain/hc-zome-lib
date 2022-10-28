@@ -5,6 +5,7 @@ fn genesis_self_check(data: GenesisSelfCheckData) -> ExternResult<ValidateCallba
     if membrane_manager_utils::skip_proof_sb(&data.dna_info.properties) {
         return Ok(ValidateCallbackResult::Valid);
     }
+    debug!("dna_info {:?}", &data.dna_info);
     let holo_agent_key = membrane_manager_utils::holo_agent(&data.dna_info.properties)?;
     membrane_manager_utils::validate_joining_code(
         holo_agent_key,
