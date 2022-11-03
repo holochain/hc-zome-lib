@@ -143,9 +143,9 @@ checksum = "14c189c53d098945499cdfa7ecc63567cf3886b3332b312a5b4585d8d3a6a610"
 
 [[package]]
 name = "cc"
-version = "1.0.73"
+version = "1.0.74"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2fff2a6927b3bb87f9595d67196a70493f627687a71d87a0d692242c33f58c11"
+checksum = "581f5dba903aac52ea3feb5ec4810848460ee833876f1f9b0fdeab1f19091574"
 
 [[package]]
 name = "cfg-if"
@@ -555,9 +555,9 @@ dependencies = [
 
 [[package]]
 name = "hc_utils"
-version = "0.0.157"
+version = "0.0.159"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8c1bc17640dda18cbd0665f2ea4a3f6f8451af4cea442bbc0311f4f9380c54e"
+checksum = "17e12bbdc68a755a09d57c8c7c6a8bee9071c6f4f7b464827803c22a54ef4ab1"
 dependencies = [
  "hdk",
  "serde",
@@ -566,9 +566,9 @@ dependencies = [
 
 [[package]]
 name = "hdi"
-version = "0.1.6"
+version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ed699c111bad691261067a1ff2c9a4bb0f9e367b1a591beb631a123b9549a237"
+checksum = "6e238a1c273beac0fed0ac2e68de1cb6dfe384039831060cd13511c8c2cf5faf"
 dependencies = [
  "hdk_derive",
  "holo_hash",
@@ -583,9 +583,9 @@ dependencies = [
 
 [[package]]
 name = "hdk"
-version = "0.0.157"
+version = "0.0.159"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "27e73dbd9e8cd079e322d5a4a693875ceda963ff0694cd163ef62d0053196413"
+checksum = "f56814f71be95ddb86b4c77048413eec8f59affbeab634c085ac842375b7a2cc"
 dependencies = [
  "getrandom",
  "hdi",
@@ -603,9 +603,9 @@ dependencies = [
 
 [[package]]
 name = "hdk_derive"
-version = "0.0.52"
+version = "0.0.53"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "98551a6d9e7317192d0b214b29e4220e8f1938ccbbc31df4c668c3c453cd16b8"
+checksum = "379b664a97e58f84f83dde2a4c7bd0218e7a06a09eae9f6451a4cbdb4dfd4243"
 dependencies = [
  "darling",
  "heck",
@@ -634,9 +634,9 @@ dependencies = [
 
 [[package]]
 name = "holo_hash"
-version = "0.0.34"
+version = "0.0.35"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a96c99cfdff12360ce35f2e258847112ad5b8c2a1bda7966f3c70f529f5987dd"
+checksum = "ee968a2eb255d3467b55ac016dfb46c38e615bcb592241eb7ba26afdf975e6c1"
 dependencies = [
  "base64",
  "blake2b_simd",
@@ -650,9 +650,9 @@ dependencies = [
 
 [[package]]
 name = "holochain_integrity_types"
-version = "0.0.22"
+version = "0.0.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "09bb917cc486f064c6a04a5ceaa8df879bacdf8c4e3ba52feb4095f372f4d606"
+checksum = "7a29b79d0f0054e06c0248d3f3b143f26a524cba32bf06f86f6f3bad47fac9de"
 dependencies = [
  "holo_hash",
  "holochain_serialized_bytes",
@@ -717,9 +717,9 @@ dependencies = [
 
 [[package]]
 name = "holochain_zome_types"
-version = "0.0.52"
+version = "0.0.54"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3e4652246089fc8a9c1134059eae8205b85bf709784b953dd3e6cc162d0af860"
+checksum = "73fa1b67c0bd980da0e1750e5015fd71b2380517dccc4220f0aef5e1deb7139f"
 dependencies = [
  "holo_hash",
  "holochain_integrity_types",
@@ -736,9 +736,9 @@ dependencies = [
 
 [[package]]
 name = "iana-time-zone"
-version = "0.1.51"
+version = "0.1.53"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f5a6ef98976b22b3b7f2f3a806f858cb862044cfa66805aa3ad84cb3d3b785ed"
+checksum = "64c122667b287044802d6ce17ee2ddf13207ed924c712de9a66a5814d5b64765"
 dependencies = [
  "android_system_properties",
  "core-foundation-sys",
@@ -991,9 +991,9 @@ dependencies = [
 
 [[package]]
 name = "num_cpus"
-version = "1.13.1"
+version = "1.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "19e64526ebdee182341572e50e9ad03965aa510cd94427a4549448f285e957a1"
+checksum = "f6058e64324c71e02bc2b150e4f3bc8286db6c83092132ffa3f6b1eab0f9def5"
 dependencies = [
  "hermit-abi",
  "libc",
@@ -1022,9 +1022,9 @@ dependencies = [
 
 [[package]]
 name = "once_cell"
-version = "1.15.0"
+version = "1.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e82dad04139b71a90c080c8463fe0dc7902db5192d939bd0950f074d014339e1"
+checksum = "86f0b0d4bf799edbc74508c1e8bf170ff5f41238e5f8225603ca7caaae2b7860"
 
 [[package]]
 name = "parking_lot"

@@ -82,6 +82,7 @@ test-e2e:	test-dna
 # make HC_REV="HC_REV" release-0.0.0-alpha0
 
 update:
+	rm -f Cargo.lock
 	echo '⚙️  Updating hdk crate...'
 	cargo upgrade hdk@=$(shell jq .hdk ./version-manager.json) --workspace --pinned
 	echo '⚙️  Updating hdi crate...'
