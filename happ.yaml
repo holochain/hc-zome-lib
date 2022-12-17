@@ -3,7 +3,7 @@ manifest_version: "1"
 name: hc-zomes
 description: ""
 roles:
-  - id: profile
+  - name: profile
     provisioning:
       strategy: create
       deferred: false
