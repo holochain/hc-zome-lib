@@ -1,10 +1,12 @@
 import { Codec } from '@holo-host/cryptolib'
-import { AgentHapp, Conductor, Dna } from '@holochain/tryorama'
+import { AppBundle, AppRoleManifest, AppRoleDnaManifest } from '@holochain/client'
+import { Conductor, Dna, AgentApp } from '@holochain/tryorama'
 import path from 'path'
 import { inspect } from 'util'
 import { fileURLToPath } from 'url'
 import * as msgpack from '@msgpack/msgpack'
 import { InstallAgentsArgs, Memproof } from './types'
+import { Dictionary } from 'lodash';
 
 const __filename = fileURLToPath(import.meta.url)
 
@@ -18,20 +20,20 @@ const jcFactoryDna = {
 
 export const installMemProofHapp = async (
   conductor: Conductor
-): Promise<AgentHapp> => {
+): Promise<AgentApp> => {
   const holo_agent_override = await conductor.adminWs().generateAgentPubKey()
-  const [memProofHapp] = await conductor.installAgentsHapps({
-    agentsDnas: [
-      {
-        dnas: [
-          {
-            source: jcFactoryDna,
-          },
-        ],
-        agentPubKey: holo_agent_override,
-      },
-    ],
-    installedAppId: `holo_agent_override`,
+  const bundle = createHappBundle("jcf", {"jcf":jcFactoryDna})
+  const [memProofHapp] = await conductor.installAgentsApps({
+    agentsApps: [{
+      app: { bundle },
+      agentPubKey: holo_agent_override,
+      installedAppId: `jcf`,
+      // networkSeed?: string;
+      // membraneProofs?: Record<string, MembraneProof>;
+      // signalHandler?: AppSignalCb;
+    }],
+    // networkSeed?: string;
+    // installedAppId?: string;
   })
   return memProofHapp
 }
@@ -42,8 +44,8 @@ export const installAgentHapps = async ({
   not_editable_profile,
   memProofHapp = undefined,
   memProofHandler = (m) => m,
-}: InstallAgentsArgs): Promise<AgentHapp[]> => {
-  let agents: AgentHapp[] = []
+}: InstallAgentsArgs): Promise<AgentApp[]> => {
+  let agents: AgentApp[] = []
   console.log('number_of_agents : ', number_of_agents)
   for (let i = 0; i < number_of_agents; i++) {
     const agentPubKey = await conductor.adminWs().generateAgentPubKey()
@@ -68,32 +70,64 @@ export const installAgentHapps = async ({
       membraneProof = Array.from(msgpack.encode(mutated))
     }
 
-    const dnaOptions: Dna = {
-      source: dnaPath,
-      membraneProof,
-      properties: {
-        skip_proof: !memProofHapp,
-        holo_agent_override: memProofHapp?.agentPubKey,
-        not_editable_profile,
-      },
-    }
     try {
-      const [newAgentHapp] = await conductor.installAgentsHapps({
-        agentsDnas: [
-          {
-            dnas: [dnaOptions],
-            agentPubKey,
-          },
-        ],
+      const bundle = createHappBundle("test", {"test": {
+        //@ts-ignore
+        path: dnaPath.path, 
+        modifiers: {properties: {
+          "skip_proof": !memProofHapp,
+          "holo_agent_override": memProofHapp?.agentPubKey,
+          not_editable_profile,
+        }
+      }
+      }})
+      const [newAgentHapp] = await conductor.installAgentsApps({
+        agentsApps: [{
+          app: { bundle },
+          agentPubKey,
+          membraneProofs: membraneProof ? { "test": membraneProof } : undefined
+          // installedAppId: string,
+          // networkSeed?: string;
+          // signalHandler?: AppSignalCb;
+        }],
+        // networkSeed?: string;
+        // installedAppId?: string;
       })
+
       console.log(
         `Registered new happ for Agent #${i + 1} : ${inspect(newAgentHapp)}`
       )
       agents.push(newAgentHapp)
-    } catch (e) {
-      console.error('Error installing agent happs', inspect(e))
+    } catch (e) {  
+      console.error('Error installing agent happs', e)
       throw e
     }
   }
   return agents
+}
+
+const createHappBundle = ( name, dnas: Dictionary<string, AppRoleDnaManifest> ) => {
+  const bundle: AppBundle	= {
+    manifest: {
+        manifest_version: "1",
+        name,
+        roles: []
+    },
+    "resources": {},
+  };
+
+  for ( let [role_name, roleManifest] of Object.entries(dnas) ) {
+    // let roleManifest: AppRoleDnaManifest = {
+    //   //@ts-ignore
+    //   path: dna.path,
+    //   properties: dna.properties
+    // }
+    let x: AppRoleManifest = {
+      name: role_name,
+      dna: roleManifest,
+    }
+    bundle.manifest.roles.push(x);
+  }
+
+  return bundle;
 }

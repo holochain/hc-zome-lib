@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "TRYORAMA_LOG_LEVEL=error RUST_BACKTRACE=1 node --loader ts-node/esm unit-test/index.ts | tap-diff",
-    "test-debug": "RUST_LOG=[debug]=debug node --loader ts-node/esm unit-test/index.ts"
+    "test-debug": "TRYORAMA_LOG_LEVEL=debug node --loader ts-node/esm unit-test/index.ts"
   },
   "authors": [
     "zo-el<joelulahanna@gmail.com>",
@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@holo-host/cryptolib": "^0.3.2",
-    "@holochain/tryorama": "0.9.2",
+    "@holochain/tryorama": "0.10.1",
     "tap-diff": "^0.1.1",
     "@msgpack/msgpack": "^2.7.2",
     "tape": "^5.5.3",
