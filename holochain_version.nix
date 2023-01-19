@@ -4,8 +4,8 @@
 
 {
     url = "https://github.com/holochain/holochain";
-    rev = "holochain-0.1.0-beta-rc.2";
-    sha256 = "sha256-GbjO3YANNDnWR2g2LBkSAgzwfc6Lrji5T/8xg+lTTCw=";
+    rev = "holochain-0.1.0-beta-rc.3";
+    sha256 = "sha256-FNw8fgrgryyXZvSP2RiLi4jEUu1pQOoz19UvRUzVykg=";
     cargoLock = {
         outputHashes = {
         };
@@ -31,39 +31,6 @@
 
         cargoLock = {
             outputHashes = {
-            };
-        };
-    };
-
-    scaffolding = {
-        url = "https://github.com/holochain/scaffolding";
-        rev = "holochain_scaffolding_cli-v0.0.6";
-        sha256 = "sha256-IlQ1OnsJP7T4Tc3JxoRuKKDQLlg11U9DzSAezO0pZ7c=";
-
-        binsFilter = [
-            "hc-scaffold"
-        ];
-
-
-        cargoLock = {
-            outputHashes = {
-            };
-        };
-    };
-
-    launcher = {
-        url = "https://github.com/holochain/launcher";
-        rev = "holochain_cli_launch-0.0.4-alpha.1";
-        sha256 = "sha256-JoNQagflNiHBnA2g9iVWNjCtlC2x2sYMlNO7jhETprI=";
-
-        binsFilter = [
-            "hc-launch"
-        ];
-
-
-        cargoLock = {
-            outputHashes = {
-                "holochain_client-0.2.0" = "sha256-zJGc2H+dGFz5/yd9ryG6q94qBhsLdrJBjuBahcRWtGE=";
             };
         };
     };
