@@ -49,8 +49,6 @@ export const installAgentsOnConductor = async ({
 	})
 	await conductor.attachAppInterface()
 	for (const appsForAgent of apps) {
-		console.log('appsForAgent:: ', appsForAgent)
-
 		await conductor.connectAppAgentInterface(appsForAgent.appId)
 	}
 	return apps
