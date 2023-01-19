@@ -7,7 +7,7 @@
 #
 SHELL		= bash
 DNANAME		= hc-zomes
-DNA		= $(DNANAME).dna
+DNA			= $(DNANAME).dna
 WASM		= target/wasm32-unknown-unknown/release/profile.wasm
 
 # External targets; Uses a nix-shell environment to obtain Holochain runtimes, run tests, etc.
@@ -21,17 +21,17 @@ nix-%:
 # Internal targets; require a Nix environment in order to be deterministic.
 # - Uses the version of `dna-util`, `holochain` on the system PATH.
 # - Normally called from within a Nix environment, eg. run `nix-shell`
-.PHONY:		rebuild install build build-cargo build-dna
-rebuild:	clean build
+.PHONY: rebuild install build build-cargo build-dna
+rebuild: clean build
 
-install:	build
+install: build
 
-build:	build-cargo build-dna
+build: build-cargo build-dna
 
-build:		$(DNA)
+build: $(DNA)
 
 # Package the DNA from the built target release WASM
-$(DNA):		$(WASM) FORCE
+$(DNA):	$(WASM) FORCE
 	@echo "Packaging DNA:"
 	@hc dna pack . -o ./$(DNANAME).dna
 	@hc app pack . -o ./$(DNANAME).happ
@@ -43,33 +43,24 @@ $(WASM): FORCE
 	@RUST_BACKTRACE=1 CARGO_TARGET_DIR=target cargo build \
 	    --release --target wasm32-unknown-unknown
 
-dnas:
-	mkdir -p ./dnas
-dnas/joining-code-factory.dna:	dnas
-	curl 'https://holo-host.github.io/joining-code-happ/releases/downloads/0_2_1/joining-code-factory.0_2_1.dna' -o $@
-
-.PHONY: DNAs
-
-DNAs: dnas/joining-code-factory.dna
-
 .PHONY: test test-all test-unit test-e2e test-dna test-dna-debug test-stress test-sim2h test-node
-test-all:	test
+test-all: test
 
-test:		test-unit test-e2e # test-stress # re-enable when Stress tests end reliably
+test: test-unit test-e2e # test-stress # re-enable when Stress tests end reliably
 
 test-unit:
 	RUST_BACKTRACE=1 cargo test \
 	    -- --nocapture
 
-test-dna: $(DNA) FORCE DNAs
+test-dna: $(DNA)
 	@echo "Starting Scenario tests in $$(pwd)..."; \
 	    cd tests && ( [ -d  node_modules ] || npm install ) && npm test
 
-test-dna-debug: $(DNA) FORCE DNAs
+test-dna-debug: $(DNA)
 	@echo "Starting Scenario tests in $$(pwd)..."; \
 	    cd tests && ( [ -d  node_modules ] || npm install ) && npm run test-debug
 
-test-e2e:	test-dna
+test-e2e: test-dna
 
 #############################
 # █▀█ █▀▀ █░░ █▀▀ ▄▀█ █▀ █▀▀
