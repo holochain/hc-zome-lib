@@ -7,7 +7,7 @@ use hdk::prelude::*;
 pub fn __update_my_profile(profile_input: ProfileInput) -> ProfileResult<Profile> {
     // Check if the profile Exist
     // Get your agent key
-    debug!("Start updating your profile...");
+    trace!("Start updating your profile...");
     let agent_address = agent_info()?.agent_initial_pubkey;
     match is_registered() {
         Ok(old_data) => {
