@@ -11,4 +11,3 @@ crate-type = [ "cdylib", "rlib" ]
 [dependencies]
 serde = "1.0"
 hdi = "=0.2.0-beta-rc.3"
-membrane_manager_utils = {path = "../../crates/membrane_manager_utils"}
