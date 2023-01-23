@@ -1,4 +1,4 @@
-use hdi::prelude::*;
+use hdi::prelude::{trace, *};
 
 #[derive(Debug, Serialize, Deserialize, SerializedBytes, Clone)]
 pub struct Props {

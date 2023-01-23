@@ -1,4 +1,4 @@
-use hdi::prelude::*;
+use hdi::prelude::{info, *};
 mod props;
 mod validation;
 
