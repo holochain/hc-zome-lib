@@ -13,7 +13,7 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "@holochain/tryorama": "0.10.4",
+    "@holochain/tryorama": "^0.10.4",
     "tap-diff": "^0.1.1",
     "tape": "^5.5.3",
     "tape-promise": "^4.0.0",

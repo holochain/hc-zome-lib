@@ -1,6 +1,6 @@
 [package]
 name = "hc_iz_profile"
-version = "0.1.0"
+version = "0.1.0-beta-rc.3"
 authors = ["zo-el <joelulahanna@gmail>"]
 edition = "2021"
 
@@ -9,5 +9,5 @@ crate-type = ["cdylib", "rlib"]
 name = "hc_iz_profile"
 
 [dependencies]
-serde = "1.0.139"
-hdi = "=0.2.0-beta-rc.2"
+serde = "1.0"
+hdi = "=0.2.0-beta-rc.3"

@@ -1,6 +1,6 @@
 [package]
 name = "membrane_manager_utils"
-version = "0.2.0"
+version = "0.1.0-beta-rc.3"
 authors = [ "zo-el<joelulahanna@gmail.com>" ]
 edition = "2021"
 
@@ -9,6 +9,6 @@ name = "membrane_manager_utils"
 crate-type = [ "cdylib", "rlib" ]
 
 [dependencies]
-serde = "=1.0.139"
+serde = "1.0"
 derive_more = "=0.99.17"
-hdi = "=0.2.0-beta-rc.2"
+hdi = "=0.2.0-beta-rc.3"

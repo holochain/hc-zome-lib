@@ -69,13 +69,27 @@ test-e2e: test-dna
 # requirements
 # - cargo-edit crate: `cargo install cargo-edit`
 # - jq linux terminal tool : `sudo apt-get install jq`
-# How to make a release?
-# make HC_REV="HC_REV" release-0.0.0-alpha0
+# How to make a update?
+#	- Update the version-manager.json file
+# 	- make update
+#	- make publish
+# Publishing
+
+publish:
+	git checkout -b v$(shell jq .hdk ./version-manager.json)
+	git commit -a -m "version bump $(shell jq .hdk ./version-manager.json)"
+	cd ./zomes/hc_iz_membrane_manager && cargo publish
+	cd ./zomes/hc_cz_profile && cargo publish
+	cd ./zomes/hc_iz_profile && cargo publish
+	git tag $(shell jq .hdk ./version-manager.json)
+	git push origin v$(shell jq .hdk ./version-manager.json)
 
 update:
 	rm -f Cargo.lock
 	echo '⚙️  Updating hdk, hdi & hc_utils crate...'
 	cargo upgrade hdk@=$(shell jq .hdk ./version-manager.json) hdi@=$(shell jq .hdi ./version-manager.json) hc_utils@=$(shell jq .hc_utils ./version-manager.json) --workspace --pinned
+	echo '⚙️  Version bump of hc_utils crate...'
+	cargo set-version $(shell jq .hdk ./version-manager.json) --workspace
 	echo '⚙️  Updating holonix...'
 	nix-shell --run "niv update"
 	echo '⚙️  Updating holochain_version in nix...'

@@ -1,6 +1,6 @@
 [package]
 name = "hc_cz_profile"
-version = "0.2.0"
+version = "0.1.0-beta-rc.3"
 authors = ["zo-el <joelulahanna@gmail>"]
 edition = "2021"
 
@@ -9,8 +9,8 @@ crate-type = ["cdylib", "rlib"]
 name = "hc_cz_profile"
 
 [dependencies]
-serde = "1.0.139"
+serde = "1.0"
 thiserror = "1.0"
-hdk = "=0.1.0-beta-rc.2"
+hdk = "=0.1.0-beta-rc.3"
 hc_iz_profile = { path = "../hc_iz_profile" }
-hc_utils = "=0.1.0-beta-rc.2"
+hc_utils = "=0.1.0-beta-rc.3"
