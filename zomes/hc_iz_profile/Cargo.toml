@@ -8,7 +8,7 @@ license = "CAL-1.0"
 authors = ["zo-el <joel.ulahanna@holo.host>"]
 keywords = [ "holochain", "holo", "hdk", "hdk-helpers", "holochain-dna"]
 categories = [ "cryptography" ]
-readme = "README.md"
+readme = "../../README.md"
 edition = "2021"
 
 [lib]
