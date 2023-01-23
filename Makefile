@@ -80,8 +80,8 @@ publish:
 	git add .
 	git commit -m "version bump $(shell jq .hdk ./version-manager.json)"
 	cd ./zomes/hc_iz_membrane_manager && cargo publish
-	cd ./zomes/hc_cz_profile && cargo publish
 	cd ./zomes/hc_iz_profile && cargo publish
+	cd ./zomes/hc_cz_profile && cargo publish
 	git tag $(shell jq .hdk ./version-manager.json)
 	git push origin v$(shell jq .hdk ./version-manager.json)
 

@@ -1,7 +1,14 @@
 [package]
 name = "hc_iz_profile"
 version = "0.1.0-beta-rc.3"
-authors = ["zo-el <joelulahanna@gmail>"]
+description = "A Holochain Integrity-Zome that stores profile information"
+homepage = "https://github.com/holochain/hc-zome-lib/tree/develop/zomes/hc_iz_profile"
+documentation = "https://docs.rs/hc_iz_profile"
+license = "CAL-1.0"
+authors = ["zo-el <joel.ulahanna@holo.host>"]
+keywords = [ "holochain", "holo", "hdk", "hdk-helpers", "holochain-dna"]
+categories = [ "cryptography" ]
+readme = "README.md"
 edition = "2021"
 
 [lib]
