@@ -1,7 +1,14 @@
 [package]
 name = "hc_iz_membrane_manager"
-version = "0.1.0"
-authors = ["zo-el <joelulahanna@gmail.com>"]
+version = "0.1.0-beta-rc.3"
+description = "A Holochain Integrity-Zome that helps validates the membrane proof passed into a DNA"
+homepage = "https://github.com/holochain/hc-zome-lib/tree/develop/zomes/hc_iz_membrane_manager"
+documentation = "https://docs.rs/hc_iz_membrane_manager"
+license = "CAL-1.0"
+authors = ["zo-el <joel.ulahanna@holo.host>"]
+keywords = [ "holochain", "holo", "hdk", "hdk-helpers", "holochain-dna"]
+categories = [ "cryptography" ]
+readme = "../../README.md"
 edition = "2021"
 
 [lib]
@@ -9,6 +16,5 @@ name = "hc_iz_membrane_manager"
 crate-type = [ "cdylib", "rlib" ]
 
 [dependencies]
-serde = "1.0.139"
-hdi = "=0.2.0-beta-rc.2"
-membrane_manager_utils = {path = "../../crates/membrane_manager_utils"}
+serde = "1.0"
+hdi = "=0.2.0-beta-rc.3"

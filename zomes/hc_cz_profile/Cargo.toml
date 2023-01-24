@@ -1,7 +1,14 @@
 [package]
 name = "hc_cz_profile"
-version = "0.2.0"
-authors = ["zo-el <joelulahanna@gmail>"]
+version = "0.1.0-beta-rc.3"
+description = "A Holochain Coordinator-Zome that stores profile information"
+homepage = "https://github.com/holochain/hc-zome-lib/tree/develop/zomes/hc_cz_profile"
+documentation = "https://docs.rs/hc_cz_profile"
+license = "CAL-1.0"
+authors = ["zo-el <joel.ulahanna@holo.host>"]
+keywords = [ "holochain", "holo", "hdk", "hdk-helpers", "holochain-dna"]
+categories = [ "cryptography" ]
+readme = "../../README.md"
 edition = "2021"
 
 [lib]
@@ -9,8 +16,8 @@ crate-type = ["cdylib", "rlib"]
 name = "hc_cz_profile"
 
 [dependencies]
-serde = "1.0.139"
+serde = "1.0"
 thiserror = "1.0"
-hdk = "=0.1.0-beta-rc.2"
-hc_iz_profile = { path = "../hc_iz_profile" }
-hc_utils = "=0.1.0-beta-rc.2"
+hdk = "=0.1.0-beta-rc.3"
+hc_iz_profile = { version = "0.1.0-beta-rc.3", path = "../hc_iz_profile" }
+hc_utils = "=0.1.0-beta-rc.3"

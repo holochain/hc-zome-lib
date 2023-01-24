@@ -10,14 +10,14 @@ pub struct Props {
 }
 
 pub fn holo_agent(encoded_props: &SerializedBytes) -> ExternResult<AgentPubKey> {
-    debug!("encoded_props: {:?}", encoded_props);
+    // trace!("encoded_props: {:?}", encoded_props);
     let maybe_props = Props::try_from(encoded_props.to_owned());
     if let Ok(props) = maybe_props.clone() {
         if let Some(a) = props.holo_agent_override {
             return Ok(AgentPubKey::try_from(a).unwrap());
         }
     }
-    debug!("Props retrieved: {:?}", maybe_props);
+    // trace!("Props retrieved: {:?}", maybe_props);
     Err(wasm_error!(WasmErrorInner::Guest(
         "Cannot fetch get a holo-agent-override".to_string()
     )))
