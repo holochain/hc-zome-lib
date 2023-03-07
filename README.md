@@ -2,6 +2,11 @@
 
 This module is has been designed to be included in other DNAs, assuming as little as possible from those.
 
+## Ownership Info
+Codeowner: @zo-el
+Consulted: None
+Informed: @jetttech
+
 ### List of available zomes
 
 - `profile` : This profile zome is a simple implementation of managing agent details
