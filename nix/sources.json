@@ -5,10 +5,10 @@
         "homepage": "",
         "owner": "holochain",
         "repo": "holonix",
-        "rev": "f2fe329ab9ae4ef90c588e03e7bc8871daa44ff8",
-        "sha256": "12l122xhvwwms932zm9zv93bm3p6zdq2jrqcsn81aarpzl5ad21z",
+        "rev": "cc3dec4cd4769837ad41ef480dd84fc1786f775b",
+        "sha256": "1j3slh94xlvwphzj2mm6nfyw5mpz5jgispa1jw9bdy823xx9vsny",
         "type": "tarball",
-        "url": "https://github.com/holochain/holonix/archive/f2fe329ab9ae4ef90c588e03e7bc8871daa44ff8.tar.gz",
+        "url": "https://github.com/holochain/holonix/archive/cc3dec4cd4769837ad41ef480dd84fc1786f775b.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
