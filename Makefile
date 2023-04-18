@@ -28,11 +28,9 @@ update:
 	echo '⚙️  Version bump of hc_utils crate...'
 	cargo set-version $(shell jq .hdk ./version-manager.json) --workspace
 	echo '⚙️  Updating holonix...'
-	nix-shell --run "niv update"
+	nix flake update
 	echo '⚙️  Updating holochain_version in nix...'
-	nix-shell --pure https://github.com/holochain/holochain-nixpkgs/archive/develop.tar.gz \
-		--arg flavors '["release"]' \
-		--run "update-holochain-versions --git-src=revision:$(shell jq .holochain_rev ./version-manager.json) --output-file=holochain_version.nix"
+	nix flake lock --override-input holochain github:holochain/holochain/$(HOLOCHAIN_REV)
 	echo '⚙️  Building dnas and happ...'
 	make nix-build
 	echo '⚙️  Running tests...'
@@ -42,7 +40,7 @@ update:
 # Test and build hc-zomes Project
 #
 # This Makefile is primarily instructional; you can simply enter the Nix environment for
-# holochain development (supplied by holonix;) via `nix-shell` and run
+# holochain development (supplied by holonix;) via `nix develop` and run
 # `make test` directly, or build a target directly, eg. `nix-build -A hc-zomes`.
 #
 SHELL		= bash
@@ -50,17 +48,17 @@ DNANAME		= hc-zomes
 DNA			= $(DNANAME).dna
 WASM		= target/wasm32-unknown-unknown/release/profile.wasm
 
-# External targets; Uses a nix-shell environment to obtain Holochain runtimes, run tests, etc.
+# External targets; Uses a nix develop environment to obtain Holochain runtimes, run tests, etc.
 .PHONY: all FORCE
 all: nix-test
 
 # nix-test, nix-install, ...
 nix-%:
-	nix-shell --pure --run "make $*"
+	nix develop --command bash -c "make $*"
 
 # Internal targets; require a Nix environment in order to be deterministic.
 # - Uses the version of `dna-util`, `holochain` on the system PATH.
-# - Normally called from within a Nix environment, eg. run `nix-shell`
+# - Normally called from within a Nix environment, eg. run `nix develop`
 .PHONY: rebuild install build build-cargo build-dna
 rebuild: clean build
 
