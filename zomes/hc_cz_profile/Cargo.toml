@@ -20,4 +20,4 @@ serde = "1.0"
 thiserror = "1.0"
 hdk = "=0.1.2"
 hc_iz_profile = { version = "0.1.2", path = "../hc_iz_profile" }
-hc_utils = "=0.1.2"
+hc_utils = "=0.1.2-alpha.0"

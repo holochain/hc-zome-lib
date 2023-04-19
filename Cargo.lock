@@ -686,9 +686,9 @@ dependencies = [
 
 [[package]]
 name = "hc_utils"
-version = "0.1.2"
+version = "0.1.2-alpha.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "edced99a34dc684160e0f5ac936da66356f3fbe5357c21f637d6d241db13f227"
+checksum = "4802ce1f48170364e621b1cae30e548a89662f215be2d69dc161edd85e6d3e39"
 dependencies = [
  "hdk",
  "serde",
@@ -1047,9 +1047,9 @@ dependencies = [
 
 [[package]]
 name = "linux-raw-sys"
-version = "0.3.2"
+version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3f508063cc7bb32987c71511216bd5a32be15bccb6a80b52df8b9d7f01fc3aa2"
+checksum = "9b085a4f2cde5781fc4b1717f2e86c62f5cda49de7ba99a7c2eae02b61c9064c"
 
 [[package]]
 name = "lock_api"
