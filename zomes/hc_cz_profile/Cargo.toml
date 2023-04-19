@@ -1,6 +1,6 @@
 [package]
 name = "hc_cz_profile"
-version = "0.1.2-alpha.0"
+version = "0.1.2-alpha.1"
 description = "A Holochain Coordinator-Zome that stores profile information"
 homepage = "https://github.com/holochain/hc-zome-lib/tree/develop/zomes/hc_cz_profile"
 documentation = "https://docs.rs/hc_cz_profile"
@@ -20,4 +20,4 @@ serde = "1.0"
 thiserror = "1.0"
 hdk = "=0.1.2"
 hc_iz_profile = { version = "0.1.2", path = "../hc_iz_profile" }
-hc_utils = "=0.1.2-alpha.0"
+hc_utils = "=0.1.2-alpha.1"
