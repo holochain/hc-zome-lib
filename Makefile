@@ -20,6 +20,7 @@ publish:
 	cd ./zomes/hc_cz_profile && cargo publish
 	git tag $(shell jq .hdk ./version-manager.json)
 	git push origin v$(shell jq .hdk ./version-manager.json)
+	git push origin refs/tags/$(shell jq .hdk ./version-manager.json)
 
 update:
 	rm -f Cargo.lock
