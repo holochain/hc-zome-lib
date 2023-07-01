@@ -6,7 +6,7 @@ pub use props::*;
 pub use validation::*;
 
 #[hdk_extern]
-fn genesis_self_check(data: GenesisSelfCheckData) -> ExternResult<ValidateCallbackResult> {
+fn genesis_self_check_1(data: GenesisSelfCheckDataV1) -> ExternResult<ValidateCallbackResult> {
     if props::skip_proof_sb(&data.dna_info.properties) {
         return Ok(ValidateCallbackResult::Valid);
     }
@@ -35,7 +35,7 @@ fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     Ok(element_pkg) => match element_pkg.signed_action().action() {
                         Action::AgentValidationPkg(pkg) => {
                             return validate_joining_code(
-                                props::holo_agent(&dna_info()?.properties)?,
+                                props::holo_agent(&dna_info()?.modifiers.properties)?,
                                 pkg.author.clone(),
                                 pkg.membrane_proof.clone(),
                             )

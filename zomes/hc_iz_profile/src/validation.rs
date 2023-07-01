@@ -60,7 +60,7 @@ struct Props {
 /// Checking properties for `not_editable_profile` flag
 pub fn is_not_editable() -> bool {
     if let Ok(info) = dna_info() {
-        return is_not_editable_sb(&info.properties);
+        return is_not_editable_sb(&info.modifiers.properties);
     }
     false
 }

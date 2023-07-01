@@ -6,7 +6,6 @@ import { Profile } from '../types.js'
 test('test editable profile zomes', async (t) => {
 	await runScenario(async (scenario: Scenario) => {
 		try {
-			console.log('scenario ', scenario)
 			let conductor = await scenario.addConductor()
 
 			const [alicePlayer, bobboPlayer] = await installAgentsOnConductor({
@@ -84,19 +83,10 @@ test('test editable profile zomes', async (t) => {
 				fn_name: 'get_profile',
 				payload: a_check_a_profile.agent_address,
 			})
-			console.log(
-				"Bobbo checks alice's updated profile:",
-				bobbo_check_alice_profile
-			)
+			console.log("Bobbo checks alice's updated profile:", bobbo_check_alice_profile)
 			t.ok(bobbo_check_alice_profile)
-			t.equal(
-				updated_profile_input_1.nickname,
-				bobbo_check_alice_profile.nickname
-			)
-			t.equal(
-				updated_profile_input_1.avatar_url,
-				bobbo_check_alice_profile.avatar_url
-			)
+			t.equal(updated_profile_input_1.nickname, bobbo_check_alice_profile.nickname)
+			t.equal(updated_profile_input_1.avatar_url, bobbo_check_alice_profile.avatar_url)
 
 			console.log('\n ==================== Case 7')
 			const updated_profile_input_2 = {
@@ -128,19 +118,10 @@ test('test editable profile zomes', async (t) => {
 				fn_name: 'get_profile',
 				payload: a_check_a_profile.agent_address,
 			})
-			console.log(
-				"Bobbo checks alice's updated profile:",
-				bobbo_check_alice_profile
-			)
+			console.log("Bobbo checks alice's updated profile:", bobbo_check_alice_profile)
 			t.ok(bobbo_check_alice_profile)
-			t.equal(
-				updated_profile_input_2.nickname,
-				bobbo_check_alice_profile.nickname
-			)
-			t.equal(
-				updated_profile_input_2.avatar_url,
-				bobbo_check_alice_profile.avatar_url
-			)
+			t.equal(updated_profile_input_2.nickname, bobbo_check_alice_profile.nickname)
+			t.equal(updated_profile_input_2.avatar_url, bobbo_check_alice_profile.avatar_url)
 		} catch (e) {
 			console.error('Error: ', e)
 			t.fail()

@@ -34,7 +34,7 @@ pub fn skip_proof_sb(encoded_props: &SerializedBytes) -> bool {
 // This is useful for test cases where we don't want to provide a membrane proof
 pub fn skip_proof() -> bool {
     if let Ok(info) = dna_info() {
-        return skip_proof_sb(&info.properties);
+        return skip_proof_sb(&info.modifiers.properties);
     }
     false
 }

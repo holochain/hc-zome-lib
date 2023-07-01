@@ -30,8 +30,6 @@ update:
 	cargo set-version $(shell jq .hdk ./version-manager.json) --workspace
 	echo '⚙️  Updating holonix...'
 	nix flake update
-	echo '⚙️  Updating holochain_version in nix...'
-	nix flake lock --override-input holochain github:holochain/holochain/$(HOLOCHAIN_REV)
 	echo '⚙️  Building dnas and happ...'
 	make nix-build
 	echo '⚙️  Running tests...'
