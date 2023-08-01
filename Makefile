@@ -28,8 +28,8 @@ update:
 	cargo upgrade hdk@=$(shell jq .hdk ./version-manager.json) hdi@=$(shell jq .hdi ./version-manager.json) hc_utils@=$(shell jq .hc_utils ./version-manager.json) --workspace --pinned
 	echo '⚙️  Version bump of hc_utils crate...'
 	cargo set-version $(shell jq .hdk ./version-manager.json) --workspace
-	echo '⚙️  Updating holonix...'
-	nix flake update
+	# echo '⚙️  Updating holonix...'
+	# nix flake update
 	echo '⚙️  Building dnas and happ...'
 	make nix-build
 	echo '⚙️  Running tests...'
