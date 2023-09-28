@@ -25,7 +25,7 @@ publish:
 update:
 	rm -f Cargo.lock
 	echo '⚙️  Updating hdk, hdi & hc_utils crate...'
-	cargo upgrade hdk@=$(shell jq .hdk ./version-manager.json) hdi@=$(shell jq .hdi ./version-manager.json) hc_utils@=$(shell jq .hc_utils ./version-manager.json) --workspace --pinned
+	cargo upgrade -p hdk@=$(shell jq .hdk ./version-manager.json) -p hdi@=$(shell jq .hdi ./version-manager.json) -p hc_utils@=$(shell jq .hc_utils ./version-manager.json) --pinned
 	echo '⚙️  Version bump of hc_utils crate...'
 	cargo set-version $(shell jq .hdk ./version-manager.json) --workspace
 	# echo '⚙️  Updating holonix...'
