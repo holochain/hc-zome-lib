@@ -1,7 +1,7 @@
 {
-  "hdk": "0.2.2",
-  "hdi": "0.3.2",
-  "hc_utils": "0.2.2",
-  "holochain_zome_types": "0.2.2",
-  "holochain_rev": "holochain-0.2.2"
+  "hdk": "0.2.3",
+  "hdi": "0.3.3",
+  "hc_utils": "0.2.3",
+  "holochain_zome_types": "0.2.3",
+  "holochain_rev": "holochain-0.2.3"
 }
