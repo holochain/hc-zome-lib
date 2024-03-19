@@ -19,9 +19,10 @@ pub fn holo_agent(encoded_props: &SerializedBytes) -> ExternResult<AgentPubKey> 
         }
     }
     info!("Props retrieved: {:?}", maybe_props);
-    Err(wasm_error!(WasmErrorInner::Guest(
-        "Cannot fetch get a holo-agent-override".to_string()
-    )))
+    Err(wasm_error!(WasmErrorInner::Guest(format!(
+        "Cannot fetch get a holo-agent-override {:?}, encoded_props: {:?}",
+        maybe_props, encoded_props
+    ))))
 }
 
 pub fn skip_proof_sb(encoded_props: &SerializedBytes) -> bool {
