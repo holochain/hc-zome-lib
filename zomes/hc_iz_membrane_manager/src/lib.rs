@@ -10,7 +10,6 @@ fn genesis_self_check_1(data: GenesisSelfCheckDataV1) -> ExternResult<ValidateCa
     if props::skip_proof_sb(&data.dna_info.properties) {
         return Ok(ValidateCallbackResult::Valid);
     }
-    // info!("dna_info {:?}", &data.dna_info);
     let holo_agent_key = props::holo_agent(&data.dna_info.properties)?;
     validate_joining_code(holo_agent_key, data.agent_key, data.membrane_proof)
 }
