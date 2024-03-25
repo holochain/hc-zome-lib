@@ -1,4 +1,4 @@
-import { Conductor, AgentApp } from '@holochain/tryorama'
+import { Conductor, AgentApp, enableAndGetAgentApp } from '@holochain/tryorama'
 import {
 	AppBundle,
 	AppRoleManifest,
@@ -41,17 +41,30 @@ export const installAgentsOnConductor = async ({
 			app: { bundle },
 		})
 	}
-
-	let apps = await conductor.installAgentsApps({
+	try {
+		let apps = await conductor.installAgentsApps({
 		agentsApps,
 		// networkSeed?: string;
 		// installedAppId?: string;
 	})
 	await conductor.attachAppInterface()
-	for (const appsForAgent of apps) {
-		await conductor.connectAppAgentInterface(appsForAgent.appId)
+	const adminWs = conductor.adminWs()
+	const port = await conductor.attachAppInterface()
+	let appInstance = []
+	for (const agentApps of apps) {
+		const appAgentWs = await conductor.connectAppAgentWs(port, agentApps.installed_app_id)
+			let app = await enableAndGetAgentApp(adminWs, appAgentWs, agentApps)
+			appInstance.push({
+				conductor,
+				appAgentWs,
+				...app,
+			})
 	}
-	return apps
+	return appInstance	
+} catch (e) {
+		console.log('Error installing happ: ', e)
+		throw e
+	}
 }
 
 const createHappBundle = (

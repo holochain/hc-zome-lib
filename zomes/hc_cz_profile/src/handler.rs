@@ -56,9 +56,12 @@ pub fn __get_profile(agent_address: AgentPubKey) -> ProfileResult<Profile> {
         avatar_url: None,
         uniqueness: agent_address.clone().into(),
     };
-
-    let latest_link_info =
-        hc_utils::get_latest_link(agent_address.into(), Some(ProfileTag::tag())).unwrap();
+    let latest_link_info = hc_utils::get_latest_link(
+        GetLinksInputBuilder::try_new(agent_address, ..)?
+            .tag_prefix(ProfileTag::tag())
+            .build(),
+    )
+    .unwrap();
 
     // If there is none we will send a default profile
     let latest_link_info = match latest_link_info {

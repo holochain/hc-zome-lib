@@ -37,7 +37,7 @@ pub struct MembraneProofPayload {
     pub registered_agent: AgentPubKey,
 }
 
-#[hdk_entry_defs]
+#[hdk_entry_types]
 #[unit_enum(EntryTypesUnit)]
 pub enum EntryTypes {
     MembraneProofPayload(MembraneProofPayload),
