@@ -796,7 +796,7 @@ checksum = "290f1a1d9242c78d09ce40a5e87e7554ee637af1351968159f4952f028f75604"
 
 [[package]]
 name = "hc_cz_profile"
-version = "0.3.0-beta-dev.35"
+version = "0.3.0-beta-dev.35-hotfix.1"
 dependencies = [
  "hc_iz_profile",
  "hc_utils",
@@ -807,7 +807,7 @@ dependencies = [
 
 [[package]]
 name = "hc_iz_membrane_manager"
-version = "0.3.0-beta-dev.35"
+version = "0.3.0-beta-dev.35-hotfix.1"
 dependencies = [
  "hdi",
  "serde",
@@ -815,7 +815,7 @@ dependencies = [
 
 [[package]]
 name = "hc_iz_profile"
-version = "0.3.0-beta-dev.35"
+version = "0.3.0-beta-dev.35-hotfix.1"
 dependencies = [
  "hdi",
  "serde",
