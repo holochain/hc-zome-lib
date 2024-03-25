@@ -1,6 +1,6 @@
 [package]
 name = "hc_iz_profile"
-version = "0.2.5-rc.0"
+version = "0.3.0-beta-dev.35"
 description = "A Holochain Integrity-Zome that stores profile information"
 homepage = "https://github.com/holochain/hc-zome-lib/tree/develop/zomes/hc_iz_profile"
 documentation = "https://docs.rs/hc_iz_profile"
@@ -17,4 +17,4 @@ name = "hc_iz_profile"
 
 [dependencies]
 serde = "1.0"
-hdi = "=0.3.5-rc.0"
+hdi = "=0.4.0-beta-dev.31"
