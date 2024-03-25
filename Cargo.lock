@@ -823,9 +823,9 @@ dependencies = [
 
 [[package]]
 name = "hc_utils"
-version = "0.3.0-beta-dev.35"
+version = "0.3.0-beta-dev.35-hotfix.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d1e5fb49754f7b69dcf6a6ed1ef02b6182733a1d0a8088a91939b11714703f3c"
+checksum = "5e536819dd2ecd367cf8f996b35b7ee1b02bf958d7528afca2085123650191f7"
 dependencies = [
  "hdk",
  "serde",
