@@ -1,7 +1,7 @@
 {
-  "hdk": "0.3.0-beta-dev.35",
-  "hdi": "0.4.0-beta-dev.31",
-  "hc_utils": "0.3.0-beta-dev.35",
-  "holochain_zome_types": "0.3.0-beta-dev.30",
-  "holochain_rev": "holochain-0.3.0-beta-dev.42"
+  "hdk": "0.3.0-beta-dev.40",
+  "hdi": "0.4.0-beta-dev.36",
+  "hc_utils": "0.3.0-beta-dev.40",
+  "holochain_zome_types": "0.3.0-beta-dev.35",
+  "holochain_rev": "holochain-0.3.0-beta-dev.47"
 }
