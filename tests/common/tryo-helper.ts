@@ -52,13 +52,16 @@ export const installAgentsOnConductor = async ({
 	const port = await conductor.attachAppInterface()
 	let appInstance = []
 	for (const agentApps of apps) {
-		const appAgentWs = await conductor.connectAppAgentWs(port, agentApps.installed_app_id)
-			let app = await enableAndGetAgentApp(adminWs, appAgentWs, agentApps)
-			appInstance.push({
-				conductor,
-				appAgentWs,
-				...app,
-			})
+		const issued1 = await adminWs.issueAppAuthenticationToken({
+			installed_app_id: agentApps.installed_app_id,
+		  });
+		  const appAgentWs = await conductor.connectAppWs(issued1.token, port)		
+		let app = await enableAndGetAgentApp(adminWs, appAgentWs, agentApps)
+		appInstance.push({
+			conductor,
+			appAgentWs,
+			...app,
+		})
 	}
 	return appInstance	
 } catch (e) {
