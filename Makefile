@@ -47,6 +47,13 @@ DNANAME		= hc-zomes
 DNA			= $(DNANAME).dna
 WASM		= target/wasm32-unknown-unknown/release/profile.wasm
 
+dnas:
+	mkdir -p ./dnas
+dnas/joining-code-factory.dna:	dnas
+	curl 'https://holo-host.github.io/joining-code-happ/releases/downloads/0_6_1/joining-code-factory.0_6_1.dna' -o $@
+
+DNAs: dnas/joining-code-factory.dna
+
 # External targets; Uses a nix develop environment to obtain Holochain runtimes, run tests, etc.
 .PHONY: all FORCE
 all: nix-test
@@ -89,11 +96,11 @@ test-unit:
 	RUST_BACKTRACE=1 cargo test \
 	    -- --nocapture
 
-test-dna: $(DNA)
+test-dna: $(DNA) DNAs
 	@echo "Starting Scenario tests in $$(pwd)..."; \
 	    cd tests && ( [ -d  node_modules ] || npm install ) && npm test
 
-test-dna-debug: $(DNA)
+test-dna-debug: $(DNA) DNAs
 	@echo "Starting Scenario tests in $$(pwd)..."; \
 	    cd tests && ( [ -d  node_modules ] || npm install ) && npm run test-debug
 
