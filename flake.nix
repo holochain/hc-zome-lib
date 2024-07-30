@@ -3,7 +3,7 @@
 
   inputs = {
     versions.url = "github:holochain/holochain/?dir=versions/weekly";
-    versions.inputs.holochain.url = "github:holochain/holochain/holochain-0.4.0-dev.9";
+    versions.inputs.holochain.url = "github:holochain/holochain/holochain-0.4.0-dev.14";
 
     holochain-flake.url = "github:holochain/holochain";
     holochain-flake.inputs.versions.follows = "versions";

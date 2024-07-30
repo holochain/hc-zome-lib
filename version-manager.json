@@ -1,7 +1,6 @@
 {
-  "hdk": "0.4.0-dev.8",
-  "hdi": "0.5.0-dev.7",
-  "hc_utils": "0.4.0-dev.8",
-  "holochain_zome_types": "0.4.0-dev.8",
-  "holochain_rev": "holochain-0.4.0-dev.9"
+  "hdk": "0.4.0-dev.11",
+  "hdi": "0.5.0-dev.10",
+  "hc_utils": "0.4.0-dev.11",
+  "holochain_rev": "holochain-0.4.0-dev.14"
 }

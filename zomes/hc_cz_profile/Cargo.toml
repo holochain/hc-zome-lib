@@ -1,6 +1,6 @@
 [package]
 name = "hc_cz_profile"
-version = "0.4.0-dev.8"
+version = "0.4.0-dev.11"
 description = "A Holochain Coordinator-Zome that stores profile information"
 homepage = "https://github.com/holochain/hc-zome-lib/tree/develop/zomes/hc_cz_profile"
 documentation = "https://docs.rs/hc_cz_profile"
@@ -16,8 +16,8 @@ crate-type = ["cdylib", "rlib"]
 name = "hc_cz_profile"
 
 [dependencies]
-serde = "1.0"
+serde =  { workspace = true }
 thiserror = "1.0"
-hdk = "=0.4.0-dev.8"
-hc_iz_profile = { version = "0.4.0-dev.8", path = "../hc_iz_profile" }
-hc_utils = "=0.4.0-dev.8"
+hdk = { workspace = true}
+hc_iz_profile = { version = "0.4.0-dev.11", path = "../hc_iz_profile" }
+hc_utils = { workspace = true }

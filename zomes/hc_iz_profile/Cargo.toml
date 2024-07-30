@@ -1,6 +1,6 @@
 [package]
 name = "hc_iz_profile"
-version = "0.4.0-dev.8"
+version = "0.4.0-dev.11"
 description = "A Holochain Integrity-Zome that stores profile information"
 homepage = "https://github.com/holochain/hc-zome-lib/tree/develop/zomes/hc_iz_profile"
 documentation = "https://docs.rs/hc_iz_profile"
@@ -16,5 +16,5 @@ crate-type = ["cdylib", "rlib"]
 name = "hc_iz_profile"
 
 [dependencies]
-serde = "1.0"
-hdi = "=0.5.0-dev.7"
+serde =  { workspace = true }
+hdi =  { workspace = true }

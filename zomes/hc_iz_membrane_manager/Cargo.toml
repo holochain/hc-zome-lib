@@ -1,6 +1,6 @@
 [package]
 name = "hc_iz_membrane_manager"
-version = "0.4.0-dev.8"
+version = "0.4.0-dev.11"
 description = "A Holochain Integrity-Zome that helps validates the membrane proof passed into a DNA"
 homepage = "https://github.com/holochain/hc-zome-lib/tree/develop/zomes/hc_iz_membrane_manager"
 documentation = "https://docs.rs/hc_iz_membrane_manager"
@@ -16,5 +16,5 @@ name = "hc_iz_membrane_manager"
 crate-type = [ "cdylib", "rlib" ]
 
 [dependencies]
-serde = "1.0"
-hdi = "=0.5.0-dev.7"
+serde =  { workspace = true }
+hdi = { workspace = true }
