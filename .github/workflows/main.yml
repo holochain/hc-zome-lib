@@ -16,9 +16,9 @@ jobs:
 
     steps:
       - name: Fetch source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Use Nix
-        uses: cachix/install-nix-action@v18
+        uses: cachix/install-nix-action@v27
         with:
           install_url: https://releases.nixos.org/nix/nix-2.12.0/install
       - name: Use Node.js ${{ matrix.node-version }}
@@ -30,10 +30,10 @@ jobs:
           set -xe
           mkdir -p ~/.config/nix/
           cp ./.github/nix.conf ~/.config/nix/
-      - uses: cachix/cachix-action@v10
+      - uses: cachix/cachix-action@v14
         with:
           name: holochain-ci
-          authToken: '${{ secrets.CACHIX_HOLOCHAIN_CI }}'
+          authToken: "${{ secrets.CACHIX_HOLOCHAIN_CI }}"
       - name: Prepare Nix environment
         run: nix develop --command bash -c "echo Completed"
       - name: Run all tests
@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Restore cache
         uses: actions/cache@v2
