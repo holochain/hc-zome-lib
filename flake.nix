@@ -3,7 +3,7 @@
 
   inputs = {
     versions.url = "github:holochain/holochain/?dir=versions/weekly";
-    versions.inputs.holochain.url = "github:holochain/holochain/holochain-0.4.0-dev.14";
+    versions.inputs.holochain.url = "github:holochain/holochain/holochain-0.4.0-dev.17";
 
     holochain-flake.url = "github:holochain/holochain";
     holochain-flake.inputs.versions.follows = "versions";
@@ -26,7 +26,7 @@
           }: {
 
             devShells.default = pkgs.mkShell {
-              inputsFrom = [ inputs'.holochain-flake.devShells.holonix ];
+              inputsFrom = [ inputs'.holochain-flake.devShells.holochainBinaries ];
               packages = [
                 pkgs.nodejs_20
                 pkgs.binaryen
