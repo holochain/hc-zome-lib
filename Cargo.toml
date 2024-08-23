@@ -14,8 +14,8 @@ opt-level = "z"
 opt-level = "z"
 
 [workspace.dependencies]
-hdi = "=0.5.0-dev.10"
-hdk = "=0.4.0-dev.12"
+hdi = "=0.5.0-dev.12"
+hdk = "=0.4.0-dev.14"
 holochain_zome_types = "0.4.0-dev.11"
-hc_utils = "=0.4.0-dev.12"
+hc_utils = "=0.4.0-dev.14"
 serde = "1.0"
