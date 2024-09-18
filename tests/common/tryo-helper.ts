@@ -138,6 +138,7 @@ const createHappBundle = (
 			manifest_version: '1',
 			name,
 			roles: [],
+			membrane_proofs_deferred: false,
 		},
 		resources: {},
 	}
